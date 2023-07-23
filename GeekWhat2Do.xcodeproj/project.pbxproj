@@ -19,6 +19,8 @@
 		E1C7D8082A6D1D0500E901A0 /* GeekWhat2DoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D8072A6D1D0500E901A0 /* GeekWhat2DoUITests.swift */; };
 		E1C7D80A2A6D1D0500E901A0 /* GeekWhat2DoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D8092A6D1D0500E901A0 /* GeekWhat2DoUITestsLaunchTests.swift */; };
 		E1C7D8172A6D444900E901A0 /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D8162A6D444900E901A0 /* Rules.swift */; };
+		E1C7D8572A6D58CF00E901A0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1C7D8562A6D58CF00E901A0 /* GoogleService-Info.plist */; };
+		E1C7D8592A6D5A8800E901A0 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D8582A6D5A8800E901A0 /* AuthViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		E1C7D8072A6D1D0500E901A0 /* GeekWhat2DoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeekWhat2DoUITests.swift; sourceTree = "<group>"; };
 		E1C7D8092A6D1D0500E901A0 /* GeekWhat2DoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeekWhat2DoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E1C7D8162A6D444900E901A0 /* Rules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rules.swift; sourceTree = "<group>"; };
+		E1C7D8562A6D58CF00E901A0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E1C7D8582A6D5A8800E901A0 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		EBDBD3694C60FA7599538410 /* Pods-GeekWhat2DoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekWhat2DoTests.debug.xcconfig"; path = "Target Support Files/Pods-GeekWhat2DoTests/Pods-GeekWhat2DoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF8E7A75D0FF680BC4ABCF2D /* Pods-GeekWhat2Do-GeekWhat2DoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekWhat2Do-GeekWhat2DoUITests.release.xcconfig"; path = "Target Support Files/Pods-GeekWhat2Do-GeekWhat2DoUITests/Pods-GeekWhat2Do-GeekWhat2DoUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F500AB49AB02591F25D7A4AC /* Pods_GeekWhat2DoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GeekWhat2DoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,7 +105,6 @@
 				EBDBD3694C60FA7599538410 /* Pods-GeekWhat2DoTests.debug.xcconfig */,
 				AB8423221CB818D551B22AED /* Pods-GeekWhat2DoTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -143,10 +146,12 @@
 				E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */,
 				E1C7D7E82A6D1D0100E901A0 /* SceneDelegate.swift */,
 				E1C7D7EA2A6D1D0100E901A0 /* ViewController.swift */,
+				E1C7D8582A6D5A8800E901A0 /* AuthViewController.swift */,
 				E1C7D8162A6D444900E901A0 /* Rules.swift */,
 				E1C7D7EF2A6D1D0500E901A0 /* Assets.xcassets */,
 				E1C7D7F12A6D1D0500E901A0 /* LaunchScreen.storyboard */,
 				E1C7D7F42A6D1D0500E901A0 /* Info.plist */,
+				E1C7D8562A6D58CF00E901A0 /* GoogleService-Info.plist */,
 			);
 			path = GeekWhat2Do;
 			sourceTree = "<group>";
@@ -179,6 +184,7 @@
 				E1C7D7DF2A6D1D0100E901A0 /* Sources */,
 				E1C7D7E02A6D1D0100E901A0 /* Frameworks */,
 				E1C7D7E12A6D1D0100E901A0 /* Resources */,
+				6DAB589DC5C7BE8947529AA3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -216,6 +222,7 @@
 				E1C7D7FF2A6D1D0500E901A0 /* Sources */,
 				E1C7D8002A6D1D0500E901A0 /* Frameworks */,
 				E1C7D8012A6D1D0500E901A0 /* Resources */,
+				B4C94A94F1DD9B9CF7C72DB9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -277,6 +284,7 @@
 			files = (
 				E1C7D7F32A6D1D0500E901A0 /* LaunchScreen.storyboard in Resources */,
 				E1C7D7F02A6D1D0500E901A0 /* Assets.xcassets in Resources */,
+				E1C7D8572A6D58CF00E901A0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +325,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6DAB589DC5C7BE8947529AA3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GeekWhat2Do/Pods-GeekWhat2Do-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GeekWhat2Do/Pods-GeekWhat2Do-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GeekWhat2Do/Pods-GeekWhat2Do-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		89D92656DBA267D76DE010FD /* [CP] Check Pods Manifest.lock */ = {
@@ -363,6 +388,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B4C94A94F1DD9B9CF7C72DB9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GeekWhat2Do-GeekWhat2DoUITests/Pods-GeekWhat2Do-GeekWhat2DoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GeekWhat2Do-GeekWhat2DoUITests/Pods-GeekWhat2Do-GeekWhat2DoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GeekWhat2Do-GeekWhat2DoUITests/Pods-GeekWhat2Do-GeekWhat2DoUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -372,6 +414,7 @@
 			files = (
 				E1C7D7EB2A6D1D0100E901A0 /* ViewController.swift in Sources */,
 				E1C7D8172A6D444900E901A0 /* Rules.swift in Sources */,
+				E1C7D8592A6D5A8800E901A0 /* AuthViewController.swift in Sources */,
 				E1C7D7E72A6D1D0100E901A0 /* AppDelegate.swift in Sources */,
 				E1C7D7E92A6D1D0100E901A0 /* SceneDelegate.swift in Sources */,
 			);
