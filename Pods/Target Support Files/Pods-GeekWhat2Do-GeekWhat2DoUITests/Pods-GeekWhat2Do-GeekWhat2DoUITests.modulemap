@@ -1,0 +1,6 @@
+framework module Pods_GeekWhat2Do_GeekWhat2DoUITests {
+  umbrella header "Pods-GeekWhat2Do-GeekWhat2DoUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
