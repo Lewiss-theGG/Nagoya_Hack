@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+
 
 class AuthViewController: UIViewController {
     
@@ -15,7 +17,13 @@ class AuthViewController: UIViewController {
     let contentView = UIView()
     
     
-    let userImgButton = UIButton()
+    let viewWithAlpha = UIView()
+    
+    
+    let nameLabel = UILabel()
+    
+    
+    let nametextField = UITextField()
     
     
     let emailLabel = UILabel()
@@ -29,12 +37,20 @@ class AuthViewController: UIViewController {
     
     let pwdTextField = UITextField()
     
+    
+    let registerButton = UIButton()
+    
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-
+        setView()
+    }
+    
+    
+    func setView(){
+        
         view.addSubview(backGroundGIFView)
         backGroundGIFView.frame = CGRect(x: view.left, y: view.top, width: view.width, height: view.height)
         backGroundGIFView.backgroundColor = .clear
@@ -42,19 +58,19 @@ class AuthViewController: UIViewController {
         
         view.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.backgroundColor = .blue
-        contentView.alpha = 0.7
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 10
         
         
-        view.addSubview(userImgButton)
-        userImgButton.translatesAutoresizingMaskIntoConstraints = false
-        userImgButton.baseColor()
-        userImgButton.backgroundColor = .clear
+        contentView.addSubview(viewWithAlpha)
+        viewWithAlpha.translatesAutoresizingMaskIntoConstraints = false
+        viewWithAlpha.backgroundColor = .systemGray2
+        viewWithAlpha.alpha = 0.7
+        viewWithAlpha.clipsToBounds = true
+        viewWithAlpha.layer.cornerRadius = 10
         
         
-        view.addSubview(emailLabel)
+        contentView.addSubview(emailLabel)
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         emailLabel.baseFont()
         emailLabel.baseTextColor()
@@ -62,7 +78,7 @@ class AuthViewController: UIViewController {
         emailLabel.backgroundColor = .clear
         
         
-        view.addSubview(emailTextField)
+        contentView.addSubview(emailTextField)
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.baseFont()
         emailTextField.baseTextColor()
@@ -70,11 +86,17 @@ class AuthViewController: UIViewController {
         emailTextField.backgroundColor = .clear
         
         
-        view.addSubview(pwdLabel)
+        contentView.addSubview(pwdLabel)
         pwdLabel.translatesAutoresizingMaskIntoConstraints = false
         pwdLabel.baseFont()
         pwdLabel.baseTextColor()
         pwdLabel.baseColor()
         pwdLabel.backgroundColor = .clear
+        
+        
+        contentView.addSubview(registerButton)
+        registerButton.translatesAutoresizingMaskIntoConstraints = false
+        registerButton.baseColor()
+        registerButton.backgroundColor = .clear
     }
 }

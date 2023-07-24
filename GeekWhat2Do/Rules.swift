@@ -283,3 +283,35 @@ extension UIButton{
         })
     }
 }
+
+
+extension UITextField{
+    
+    func def_textFieldDone(){
+        // ツールバー生成
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.width, height: 40))
+        
+        // スタイルを設定
+        toolBar.barStyle = UIBarStyle.default
+        
+        // 画面幅に合わせてサイズを変更
+        toolBar.sizeToFit()
+        
+        // 閉じるボタンを右に配置するためのスペース?
+        let spacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: self, action: nil)
+        
+        // 閉じるボタン
+        let commitButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.done, target: self, action: #selector(commitButtonTapped(view:)))
+        
+        // スペース、閉じるボタンを右側に配置
+        toolBar.items = [spacer, commitButton]
+        
+        // textViewのキーボードにツールバーを設定
+        self.inputAccessoryView = toolBar
+    }
+    
+    @objc func commitButtonTapped(view: UIView) {
+        
+        superview?.endEditing(true)
+    }
+}
