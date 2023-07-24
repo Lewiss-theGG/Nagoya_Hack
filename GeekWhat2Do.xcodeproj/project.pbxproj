@@ -12,7 +12,7 @@
 		5B7DEC372707CBC2E395CB0E /* Pods_GeekWhat2Do_GeekWhat2DoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0112EBD8EA76B2869398311E /* Pods_GeekWhat2Do_GeekWhat2DoUITests.framework */; };
 		E1C7D7E72A6D1D0100E901A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */; };
 		E1C7D7E92A6D1D0100E901A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7E82A6D1D0100E901A0 /* SceneDelegate.swift */; };
-		E1C7D7EB2A6D1D0100E901A0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7EA2A6D1D0100E901A0 /* ViewController.swift */; };
+		E1C7D7EB2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7EA2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift */; };
 		E1C7D7F02A6D1D0500E901A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1C7D7EF2A6D1D0500E901A0 /* Assets.xcassets */; };
 		E1C7D7F32A6D1D0500E901A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1C7D7F12A6D1D0500E901A0 /* LaunchScreen.storyboard */; };
 		E1C7D7FE2A6D1D0500E901A0 /* GeekWhat2DoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7FD2A6D1D0500E901A0 /* GeekWhat2DoTests.swift */; };
@@ -21,6 +21,8 @@
 		E1C7D8172A6D444900E901A0 /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D8162A6D444900E901A0 /* Rules.swift */; };
 		E1C7D8572A6D58CF00E901A0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1C7D8562A6D58CF00E901A0 /* GoogleService-Info.plist */; };
 		E1C7D8592A6D5A8800E901A0 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D8582A6D5A8800E901A0 /* AuthViewController.swift */; };
+		E1C7D85F2A6E579D00E901A0 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D85E2A6E579D00E901A0 /* SignInViewController.swift */; };
+		E1C7D8612A6E626C00E901A0 /* ResetPWDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D8602A6E626C00E901A0 /* ResetPWDViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +50,7 @@
 		E1C7D7E32A6D1D0100E901A0 /* GeekWhat2Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeekWhat2Do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1C7D7E82A6D1D0100E901A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E1C7D7EA2A6D1D0100E901A0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E1C7D7EA2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithAnimationViewController.swift; sourceTree = "<group>"; };
 		E1C7D7EF2A6D1D0500E901A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1C7D7F22A6D1D0500E901A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1C7D7F42A6D1D0500E901A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,6 +62,8 @@
 		E1C7D8162A6D444900E901A0 /* Rules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rules.swift; sourceTree = "<group>"; };
 		E1C7D8562A6D58CF00E901A0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E1C7D8582A6D5A8800E901A0 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		E1C7D85E2A6E579D00E901A0 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		E1C7D8602A6E626C00E901A0 /* ResetPWDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPWDViewController.swift; sourceTree = "<group>"; };
 		EBDBD3694C60FA7599538410 /* Pods-GeekWhat2DoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekWhat2DoTests.debug.xcconfig"; path = "Target Support Files/Pods-GeekWhat2DoTests/Pods-GeekWhat2DoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF8E7A75D0FF680BC4ABCF2D /* Pods-GeekWhat2Do-GeekWhat2DoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekWhat2Do-GeekWhat2DoUITests.release.xcconfig"; path = "Target Support Files/Pods-GeekWhat2Do-GeekWhat2DoUITests/Pods-GeekWhat2Do-GeekWhat2DoUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F500AB49AB02591F25D7A4AC /* Pods_GeekWhat2DoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GeekWhat2DoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,8 +149,10 @@
 			children = (
 				E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */,
 				E1C7D7E82A6D1D0100E901A0 /* SceneDelegate.swift */,
-				E1C7D7EA2A6D1D0100E901A0 /* ViewController.swift */,
+				E1C7D7EA2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift */,
 				E1C7D8582A6D5A8800E901A0 /* AuthViewController.swift */,
+				E1C7D85E2A6E579D00E901A0 /* SignInViewController.swift */,
+				E1C7D8602A6E626C00E901A0 /* ResetPWDViewController.swift */,
 				E1C7D8162A6D444900E901A0 /* Rules.swift */,
 				E1C7D7EF2A6D1D0500E901A0 /* Assets.xcassets */,
 				E1C7D7F12A6D1D0500E901A0 /* LaunchScreen.storyboard */,
@@ -412,9 +418,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1C7D7EB2A6D1D0100E901A0 /* ViewController.swift in Sources */,
+				E1C7D7EB2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift in Sources */,
 				E1C7D8172A6D444900E901A0 /* Rules.swift in Sources */,
+				E1C7D85F2A6E579D00E901A0 /* SignInViewController.swift in Sources */,
 				E1C7D8592A6D5A8800E901A0 /* AuthViewController.swift in Sources */,
+				E1C7D8612A6E626C00E901A0 /* ResetPWDViewController.swift in Sources */,
 				E1C7D7E72A6D1D0100E901A0 /* AppDelegate.swift in Sources */,
 				E1C7D7E92A6D1D0100E901A0 /* SceneDelegate.swift in Sources */,
 			);

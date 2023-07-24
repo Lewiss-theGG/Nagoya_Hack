@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -14,13 +16,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        if let windowScene = scene as? UIWindowScene {
+        if Auth.auth().currentUser?.uid != nil {
             
-            let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = AuthViewController.init()
-            self.window = window
-            window.makeKeyAndVisible()
+            // ログインしている場合
+            if let windowScene = scene as? UIWindowScene {
+                
+                let window = UIWindow(windowScene: windowScene)
+                window.rootViewController = AuthViewController.init()
+                self.window = window
+                window.makeKeyAndVisible()
+            }
         }
+        else {
+            
+            // ログインしている場合
+            if let windowScene = scene as? UIWindowScene {
+                
+                let window = UIWindow(windowScene: windowScene)
+                window.rootViewController = SignInViewController.init()
+                self.window = window
+                window.makeKeyAndVisible()
+            }
+        }
+        
+        
+        guard let _ = (scene as? UIWindowScene) else { return }
     }
     
 
