@@ -63,7 +63,7 @@ class AuthViewController: UIViewController {
         
         
         contentView.addSubview(viewWithAlpha)
-        viewWithAlpha.alpha = 0.7
+        viewWithAlpha.alpha = 0.25
         viewWithAlpha.backgroundColor = .systemGray2
         viewWithAlpha.layer.cornerRadius = 10
         viewWithAlpha.clipsToBounds = true
@@ -81,9 +81,10 @@ class AuthViewController: UIViewController {
         contentView.addSubview(nameTextField)
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
         nameTextField.baseTextColor()
-        nameTextField.borderStyle = .bezel
-        nameTextField.backgroundColor = .systemGray2
+        nameTextField.borderStyle = .roundedRect
+        nameTextField.backgroundColor = .clear
         nameTextField.placeholder = "ニックネームを入力して下さい"
+        nameTextField.textFieldDone()
         
         
         contentView.addSubview(emailLabel)
@@ -97,10 +98,11 @@ class AuthViewController: UIViewController {
         contentView.addSubview(emailTextField)
         emailTextField.baseFont()
         emailTextField.baseTextColor()
-        emailTextField.borderStyle = .bezel
-        emailTextField.backgroundColor = .systemGray2
+        emailTextField.borderStyle = .roundedRect
+        emailTextField.backgroundColor = .clear
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.placeholder = "メールアドレスを入力して下さい"
+        emailTextField.textFieldDone()
         
         
         contentView.addSubview(pwdLabel)
@@ -115,9 +117,10 @@ class AuthViewController: UIViewController {
         pwdTextField.translatesAutoresizingMaskIntoConstraints = false
         pwdTextField.baseFont()
         pwdTextField.baseTextColor()
-        pwdTextField.borderStyle = .bezel
-        pwdTextField.backgroundColor = .systemGray2
+        pwdTextField.borderStyle = .roundedRect
+        pwdTextField.backgroundColor = .clear
         pwdTextField.placeholder = "パスワードを入力して下さい"
+        pwdTextField.textFieldDone()
         
         
         view.addSubview(registerButton)
@@ -138,7 +141,7 @@ class AuthViewController: UIViewController {
             backGroundGIFView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             
-            contentView.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 100),
+            contentView.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 75),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             contentView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
@@ -186,7 +189,7 @@ class AuthViewController: UIViewController {
             pwdTextField.heightAnchor.constraint(equalTo: nameLabel.heightAnchor),
             
             
-            registerButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 20),
+            registerButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -20),
             registerButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             registerButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.8),
             registerButton.heightAnchor.constraint(equalToConstant: 40),
