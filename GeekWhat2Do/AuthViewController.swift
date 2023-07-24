@@ -15,7 +15,13 @@ class AuthViewController: UIViewController {
     let contentView = UIView()
     
     
-    let userImgButton = UIButton()
+    let viewWithAlpha = UIView()
+    
+    
+    let nameLabel = UILabel()
+    
+    
+    let nameTextField = UITextField()
     
     
     let emailLabel = UILabel()
@@ -29,52 +35,163 @@ class AuthViewController: UIViewController {
     
     let pwdTextField = UITextField()
     
-
+    
+    let registerButton = UIButton()
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-
+        
+        setView()
+    }
+    
+    
+    func setView(){
+        
         view.addSubview(backGroundGIFView)
-        backGroundGIFView.frame = CGRect(x: view.left, y: view.top, width: view.width, height: view.height)
-        backGroundGIFView.backgroundColor = .clear
+        backGroundGIFView.backgroundColor = .systemBackground
+        backGroundGIFView.frame = view.frame
         
         
         view.addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.backgroundColor = .blue
-        contentView.alpha = 0.7
-        contentView.clipsToBounds = true
+        contentView.backgroundColor = .clear
         contentView.layer.cornerRadius = 10
+        contentView.clipsToBounds = true
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         
         
-        view.addSubview(userImgButton)
-        userImgButton.translatesAutoresizingMaskIntoConstraints = false
-        userImgButton.baseColor()
-        userImgButton.backgroundColor = .clear
+        contentView.addSubview(viewWithAlpha)
+        viewWithAlpha.alpha = 0.7
+        viewWithAlpha.backgroundColor = .systemGray2
+        viewWithAlpha.layer.cornerRadius = 10
+        viewWithAlpha.clipsToBounds = true
+        viewWithAlpha.translatesAutoresizingMaskIntoConstraints = false
         
         
-        view.addSubview(emailLabel)
+        contentView.addSubview(nameLabel)
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.baseFont(font: .monospacedSystemFont(ofSize: 20, weight: .semibold))
+        nameLabel.baseTextColor()
+        nameLabel.backgroundColor = .clear
+        nameLabel.text = "ニックネーム"
+        
+        
+        contentView.addSubview(nameTextField)
+        nameTextField.translatesAutoresizingMaskIntoConstraints = false
+        nameTextField.baseTextColor()
+        nameTextField.borderStyle = .bezel
+        nameTextField.backgroundColor = .systemGray2
+        nameTextField.placeholder = "ニックネームを入力して下さい"
+        
+        
+        contentView.addSubview(emailLabel)
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
-        emailLabel.baseFont()
+        emailLabel.baseFont(font: .monospacedSystemFont(ofSize: 20, weight: .semibold))
         emailLabel.baseTextColor()
-        emailLabel.baseColor()
         emailLabel.backgroundColor = .clear
+        emailLabel.text = "メールアドレス"
         
         
-        view.addSubview(emailTextField)
-        emailTextField.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(emailTextField)
         emailTextField.baseFont()
         emailTextField.baseTextColor()
-        emailTextField.baseColor()
-        emailTextField.backgroundColor = .clear
+        emailTextField.borderStyle = .bezel
+        emailTextField.backgroundColor = .systemGray2
+        emailTextField.translatesAutoresizingMaskIntoConstraints = false
+        emailTextField.placeholder = "メールアドレスを入力して下さい"
         
         
-        view.addSubview(pwdLabel)
+        contentView.addSubview(pwdLabel)
         pwdLabel.translatesAutoresizingMaskIntoConstraints = false
-        pwdLabel.baseFont()
+        pwdLabel.baseFont(font: .monospacedSystemFont(ofSize: 20, weight: .semibold))
         pwdLabel.baseTextColor()
-        pwdLabel.baseColor()
         pwdLabel.backgroundColor = .clear
+        pwdLabel.text = "パスワード"
+        
+        
+        contentView.addSubview(pwdTextField)
+        pwdTextField.translatesAutoresizingMaskIntoConstraints = false
+        pwdTextField.baseFont()
+        pwdTextField.baseTextColor()
+        pwdTextField.borderStyle = .bezel
+        pwdTextField.backgroundColor = .systemGray2
+        pwdTextField.placeholder = "パスワードを入力して下さい"
+        
+        
+        view.addSubview(registerButton)
+        registerButton.translatesAutoresizingMaskIntoConstraints = false
+        registerButton.backgroundColor = .clear
+        registerButton.clipsToBounds = true
+        registerButton.layer.cornerRadius = 20
+        registerButton.backgroundColor = .link
+        registerButton.setTitle("ユーザー登録", for: .normal)
+        registerButton.pressAction()
+        
+        
+        NSLayoutConstraint.activate([
+            
+            backGroundGIFView.topAnchor.constraint(equalTo: view.topAnchor),
+            backGroundGIFView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            backGroundGIFView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            backGroundGIFView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            
+            contentView.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 100),
+            contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            contentView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            contentView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
+            
+            
+            viewWithAlpha.topAnchor.constraint(equalTo: contentView.topAnchor),
+            viewWithAlpha.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            viewWithAlpha.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            viewWithAlpha.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            
+            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            nameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.9),
+            nameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1/6, constant: -5),
+            
+            
+            nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
+            nameTextField.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            nameTextField.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
+            nameTextField.heightAnchor.constraint(equalTo: nameLabel.heightAnchor),
+            
+            
+            emailLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor),
+            emailLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            emailLabel.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
+            emailLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor),
+            
+            
+            emailTextField.topAnchor.constraint(equalTo: emailLabel.bottomAnchor),
+            emailTextField.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            emailTextField.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
+            emailTextField.heightAnchor.constraint(equalTo: nameLabel.heightAnchor),
+            
+            
+            pwdLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
+            pwdLabel.centerXAnchor.constraint(equalTo: nameLabel.centerXAnchor),
+            pwdLabel.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
+            pwdLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor),
+
+
+            pwdTextField.topAnchor.constraint(equalTo: pwdLabel.bottomAnchor),
+            pwdTextField.centerXAnchor.constraint(equalTo: nameLabel.centerXAnchor),
+            pwdTextField.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
+            pwdTextField.heightAnchor.constraint(equalTo: nameLabel.heightAnchor),
+            
+            
+            registerButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 20),
+            registerButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            registerButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.8),
+            registerButton.heightAnchor.constraint(equalToConstant: 40),
+        ])
     }
 }
+
+
