@@ -10,6 +10,7 @@ target 'GeekWhat2Do' do
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
   pod 'Firebase/DynamicLinks'
+  pod 'Alamofire'
 
   # Pods for GeekWhat2Do
 
