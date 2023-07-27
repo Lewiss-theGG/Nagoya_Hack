@@ -26,12 +26,18 @@ class ChatViewController: ViewWithAnimationViewController {
     let responseView = UITextView()
     
     
-    private var response = String()
+    var response = String()
     
     
-    let message = ChatGPTMassage(role: "user", content: content)
-    let request = ChatGPTRequest(model: "gpt-3.5-turbo", messages: [message])
-    let requestData try? JSONEncoder().encode(req)
+    var content = String()
+    
+    
+    private var requestBody:Data?{
+        
+        let message = ChatGPTMassage(role: "user", content: content)
+        let req = ChatGPTRequest(model: "gpt-3.5-turbo", messages: [message])
+        return try? JSONEncoder().encode(req)
+    }
     
     
     override func viewDidLoad() {
@@ -71,10 +77,22 @@ class ChatViewController: ViewWithAnimationViewController {
     
     @objc private func APIRequest() {
         
-        Task {
-            
-            responseView.text = await task1()
+        Task{
+            do{
+                let chatGptResponse = try await request()
+                response = chatGptResponse.choices.first?.message.content ?? "no message"
+                responseView.text = response
+            }catch{
+                let nsError = error as NSError
+                response = nsError.domain
+            }
         }
+        
+        
+//        Task {
+//
+//            responseView.text = await task1()
+//        }
     }
 }
 
@@ -130,16 +148,94 @@ extension ChatViewController{
         
         return _response
     }
+    
+    //private func task1() async -> String {
+    private func request() async throws -> ChatGPTResponse{
+        
+        //URL
+        guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
+            throw NSError(domain: "URL error", code: -1)
+        }
+        
+        
+        //URLRequestを作成
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        urlRequest.allHTTPHeaderFields = ["Authorization" : "Bearer \(apiKey)"
+                                          ,"OpenAI-Organization": orgId
+                                          ,"Content-Type" : "application/json"]
+        
+        
+        urlRequest.httpBody = requestBody
+        
+        //URLSessionでRequest
+        guard let (data, urlResponse) = try? await URLSession.shared.data(for: urlRequest) else {
+            throw NSError(domain: "URLSession error", code: -1)
+        }
+        
+        //ResponseをHTTPURLResponseにしてHTTPレスポンスヘッダを得る
+        guard let httpStatus = urlResponse as? HTTPURLResponse else {
+            throw NSError(domain: "HTTPURLResponse error", code: -1)
+        }
+        
+        //BodyをStringに、失敗したらレスポンスコードを返す
+        guard let response = String(data: data, encoding: .utf8) else {
+            throw NSError(domain: "\(httpStatus.statusCode)", code: -1)
+        }
+        print(response)
+        
+        //JSONをChatGPTResponse構造体にする
+        guard let chatGPTResponse = try? JSONDecoder().decode(ChatGPTResponse.self, from: data) else {
+            throw NSError(domain: response, code: -1)
+        }
+        
+        return chatGPTResponse
+        
+    }
 }
 
 
+
 struct ChatGPTRequest:Codable{
+    
     let model:String
     let messages:[ChatGPTMassage]
 }
 
 
+
 struct ChatGPTMassage:Codable{
+    
     let role:String
     let content:String
+}
+
+
+
+struct ChatGPTResponse:Codable{
+    
+    let id:String
+    let object:String
+    let created:Int
+    let model:String
+    let usage:ChatGPTUsage
+    let choices:[ChatGPTChoices]
+}
+
+
+
+struct ChatGPTUsage:Codable{
+    
+    let prompt_tokens:Int
+    let completion_tokens:Int
+    let total_tokens:Int
+}
+
+
+
+struct ChatGPTChoices:Codable{
+    
+    let message:ChatGPTMassage
+    let finish_reason:String
+    let index:Int
 }
