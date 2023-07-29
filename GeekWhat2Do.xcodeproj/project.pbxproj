@@ -10,6 +10,7 @@
 		07D9AD63DA9FCC8CE62BED30 /* Pods_GeekWhat2Do.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA42F5563DEAADE59890C4E /* Pods_GeekWhat2Do.framework */; };
 		47F39C6020497A7B94AFC133 /* Pods_GeekWhat2DoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F500AB49AB02591F25D7A4AC /* Pods_GeekWhat2DoTests.framework */; };
 		5B7DEC372707CBC2E395CB0E /* Pods_GeekWhat2Do_GeekWhat2DoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0112EBD8EA76B2869398311E /* Pods_GeekWhat2Do_GeekWhat2DoUITests.framework */; };
+		E12FA9DA2A74EB3C00F8CD43 /* chatDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9D92A74EB3B00F8CD43 /* chatDecode.swift */; };
 		E1593E682A70D62500B2B915 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1593E672A70D62500B2B915 /* ChatViewController.swift */; };
 		E1C7D7E72A6D1D0100E901A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */; };
 		E1C7D7E92A6D1D0100E901A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7E82A6D1D0100E901A0 /* SceneDelegate.swift */; };
@@ -48,6 +49,7 @@
 		27C96C0C898111F2172EB15C /* Pods-GeekWhat2Do.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekWhat2Do.debug.xcconfig"; path = "Target Support Files/Pods-GeekWhat2Do/Pods-GeekWhat2Do.debug.xcconfig"; sourceTree = "<group>"; };
 		A1A62D41356717BE19253A01 /* Pods-GeekWhat2Do-GeekWhat2DoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekWhat2Do-GeekWhat2DoUITests.debug.xcconfig"; path = "Target Support Files/Pods-GeekWhat2Do-GeekWhat2DoUITests/Pods-GeekWhat2Do-GeekWhat2DoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AB8423221CB818D551B22AED /* Pods-GeekWhat2DoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GeekWhat2DoTests.release.xcconfig"; path = "Target Support Files/Pods-GeekWhat2DoTests/Pods-GeekWhat2DoTests.release.xcconfig"; sourceTree = "<group>"; };
+		E12FA9D92A74EB3B00F8CD43 /* chatDecode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatDecode.swift; sourceTree = "<group>"; };
 		E1593E672A70D62500B2B915 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		E1C7D7E32A6D1D0100E901A0 /* GeekWhat2Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeekWhat2Do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				E1C7D8602A6E626C00E901A0 /* ResetPWDViewController.swift */,
 				E1593E672A70D62500B2B915 /* ChatViewController.swift */,
 				E1C7D8162A6D444900E901A0 /* Rules.swift */,
+				E12FA9D92A74EB3B00F8CD43 /* chatDecode.swift */,
 				E1C7D7EF2A6D1D0500E901A0 /* Assets.xcassets */,
 				E1C7D7F12A6D1D0500E901A0 /* LaunchScreen.storyboard */,
 				E1C7D7F42A6D1D0500E901A0 /* Info.plist */,
@@ -421,6 +424,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E12FA9DA2A74EB3C00F8CD43 /* chatDecode.swift in Sources */,
 				E1C7D7EB2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift in Sources */,
 				E1C7D8172A6D444900E901A0 /* Rules.swift in Sources */,
 				E1593E682A70D62500B2B915 /* ChatViewController.swift in Sources */,

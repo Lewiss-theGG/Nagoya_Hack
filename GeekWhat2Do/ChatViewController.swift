@@ -32,13 +32,13 @@ class ChatViewController: ViewWithAnimationViewController {
     var content = String()
     
     
-    private var requestBody:Data?{
-        
-        let message = ChatGPTMassage(role: "user", content: content)
-        let req = ChatGPTRequest(model: "gpt-3.5-turbo", messages: [message])
-        return try? JSONEncoder().encode(req)
-    }
+    var waitForResponse = false
     
+    
+    var previousQuestion = String()
+    
+    
+    var chatRecord: [ChatGPTMassage] = []
     
     override func viewDidLoad() {
         
@@ -69,88 +69,71 @@ class ChatViewController: ViewWithAnimationViewController {
     }
     
     
-    override func viewWillLayoutSubviews() {
-        
-        
-    }
-    
-    
     @objc private func APIRequest() {
         
-        Task{
-            do{
-                let chatGptResponse = try await request()
-                response = chatGptResponse.choices.first?.message.content ?? "no message"
-                responseView.text = response
-            }catch{
-                let nsError = error as NSError
-                response = nsError.domain
+        if waitForResponse == false{
+            
+            waitForResponse = true
+            
+            
+            Task{
+                do{
+                    
+                    let chatGptResponse = try await request()
+                    
+                    
+                    response = chatGptResponse.choices.first?.message.content ?? "no message"
+                    responseView.text = response
+                    
+                    
+                    msgField.text = ""
+                    msgField.placeholder = previousQuestion
+                    
+                    
+                    waitForResponse = false
+                }catch{
+                    
+                    let nsError = error as NSError
+                    response = nsError.domain
+                    
+                    
+                    waitForResponse = false
+                }
             }
         }
-        
-        
-//        Task {
-//
-//            responseView.text = await task1()
-//        }
+        else{
+            
+            print("###############################################")
+        }
     }
 }
 
 
 
 extension ChatViewController{
-
-    
-    private func task1() async -> String {
-        
-        //URL
-        guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
-            return "URL error"
-        }
-        
-        
-        guard let content = msgField.text else{
-            return String()
-        }
-        
-        
-        //URLRequestを作成
-        var req = URLRequest(url: url)
-        req.httpMethod = "POST"
-        req.allHTTPHeaderFields = ["Authorization" : "Bearer \(apiKey)"
-                                   ,"OpenAI-Organization": orgId
-                                   ,"Content-Type" : "application/json"]
-        req.httpBody = """
-    {
-    "model" : "gpt-3.5-turbo"
-    ,"messages": [{"role": "user", "content": "\(content)"}]
-    }
-    """.data(using: .utf8)
-        
-        //URLSessionでRequest
-        guard let (data, urlResponse) = try? await URLSession.shared.data(for: req) else {
-            return "URLSession error"
-        }
-        
-        //ResponseをHTTPURLResponseにしてHTTPレスポンスヘッダを得る
-        guard let httpStatus = urlResponse as? HTTPURLResponse else {
-            return "HTTPURLResponse error"
-        }
-        
-        //BodyをStringに、失敗したらレスポンスコードを返す
-        guard let _response = String(data: data, encoding: .utf8) else {
-            return "\(httpStatus.statusCode)"
-        }
-        print(_response)
-        
-        
-        //response = _response
-        
-        return _response
-    }
     
     //private func task1() async -> String {
     private func request() async throws -> ChatGPTResponse{
+        
+        
+        guard let content = msgField.text else{
+            
+            throw NSError(domain: "Empty Content", code: -1)
+        }
+        
+        
+        var requestBody:Data?{
+            
+            let message = ChatGPTMassage(role: "assistant", content: content)
+
+            
+            chatRecord.append(message)
+            
+            
+            let req = ChatGPTRequest(model: "gpt-3.5-turbo", messages: chatRecord)
+            return try? JSONEncoder().encode(req)
+        }
+        
         
         //URL
         guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
@@ -168,15 +151,18 @@ extension ChatViewController{
         
         urlRequest.httpBody = requestBody
         
+        
         //URLSessionでRequest
         guard let (data, urlResponse) = try? await URLSession.shared.data(for: urlRequest) else {
             throw NSError(domain: "URLSession error", code: -1)
         }
         
+        
         //ResponseをHTTPURLResponseにしてHTTPレスポンスヘッダを得る
         guard let httpStatus = urlResponse as? HTTPURLResponse else {
             throw NSError(domain: "HTTPURLResponse error", code: -1)
         }
+        
         
         //BodyをStringに、失敗したらレスポンスコードを返す
         guard let response = String(data: data, encoding: .utf8) else {
@@ -184,58 +170,16 @@ extension ChatViewController{
         }
         print(response)
         
+        
         //JSONをChatGPTResponse構造体にする
         guard let chatGPTResponse = try? JSONDecoder().decode(ChatGPTResponse.self, from: data) else {
             throw NSError(domain: response, code: -1)
         }
         
-        return chatGPTResponse
         
+        previousQuestion = content
+        
+        
+        return chatGPTResponse
     }
-}
-
-
-
-struct ChatGPTRequest:Codable{
-    
-    let model:String
-    let messages:[ChatGPTMassage]
-}
-
-
-
-struct ChatGPTMassage:Codable{
-    
-    let role:String
-    let content:String
-}
-
-
-
-struct ChatGPTResponse:Codable{
-    
-    let id:String
-    let object:String
-    let created:Int
-    let model:String
-    let usage:ChatGPTUsage
-    let choices:[ChatGPTChoices]
-}
-
-
-
-struct ChatGPTUsage:Codable{
-    
-    let prompt_tokens:Int
-    let completion_tokens:Int
-    let total_tokens:Int
-}
-
-
-
-struct ChatGPTChoices:Codable{
-    
-    let message:ChatGPTMassage
-    let finish_reason:String
-    let index:Int
 }
