@@ -10,7 +10,8 @@ target 'GeekWhat2Do' do
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
   pod 'Firebase/DynamicLinks'
-  pod 'Alamofire'
+  pod 'Alamofire' 
+  pod 'KMPlaceholderTextView'
 
   # Pods for GeekWhat2Do
 

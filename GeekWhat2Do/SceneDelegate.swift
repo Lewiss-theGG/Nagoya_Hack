@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if let windowScene = scene as? UIWindowScene {
                 
                 let window = UIWindow(windowScene: windowScene)
-                window.rootViewController = ChatViewController.init()
+                window.rootViewController = SendRequestViewController.init()
                 self.window = window
                 window.makeKeyAndVisible()
             }
