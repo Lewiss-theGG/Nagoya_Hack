@@ -70,6 +70,9 @@ final class ChatViewController: UIViewController {
         view.addSubview(responseView)
         responseView.backgroundColor = .secondarySystemBackground
         responseView.frame = CGRect(x: view.width/12, y: requestButton.bottom + 50, width: view.width*5/6, height: view.safetyHeight - 200)
+        
+        
+        print(content)
     }
     
     

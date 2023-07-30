@@ -12,8 +12,8 @@
 		5B7DEC372707CBC2E395CB0E /* Pods_GeekWhat2Do_GeekWhat2DoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0112EBD8EA76B2869398311E /* Pods_GeekWhat2Do_GeekWhat2DoUITests.framework */; };
 		E12FA9DA2A74EB3C00F8CD43 /* chatDecode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9D92A74EB3B00F8CD43 /* chatDecode.swift */; };
 		E12FA9DC2A74F4CA00F8CD43 /* ChatView_Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9DB2A74F4CA00F8CD43 /* ChatView_Chat.swift */; };
-		E12FA9DE2A75074B00F8CD43 /* SendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9DD2A75074B00F8CD43 /* SendRequestViewController.swift */; };
-		E12FA9E52A7658E100F8CD43 /* ERIJI in Resources */ = {isa = PBXBuildFile; fileRef = E12FA9E42A7658E100F8CD43 /* ERIJI */; };
+		E12FA9E82A765DF700F8CD43 /* APJapanesefont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E12FA9E72A765DF700F8CD43 /* APJapanesefont.ttf */; };
+		E12FA9E92A76602600F8CD43 /* SendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9DD2A75074B00F8CD43 /* SendRequestViewController.swift */; };
 		E1593E682A70D62500B2B915 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1593E672A70D62500B2B915 /* ChatViewController.swift */; };
 		E1C7D7E72A6D1D0100E901A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */; };
 		E1C7D7E92A6D1D0100E901A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7E82A6D1D0100E901A0 /* SceneDelegate.swift */; };
@@ -55,7 +55,7 @@
 		E12FA9D92A74EB3B00F8CD43 /* chatDecode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatDecode.swift; sourceTree = "<group>"; };
 		E12FA9DB2A74F4CA00F8CD43 /* ChatView_Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView_Chat.swift; sourceTree = "<group>"; };
 		E12FA9DD2A75074B00F8CD43 /* SendRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRequestViewController.swift; sourceTree = "<group>"; };
-		E12FA9E42A7658E100F8CD43 /* ERIJI */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ERIJI; sourceTree = "<group>"; };
+		E12FA9E72A765DF700F8CD43 /* APJapanesefont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = APJapanesefont.ttf; sourceTree = "<group>"; };
 		E1593E672A70D62500B2B915 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		E1C7D7E32A6D1D0100E901A0 /* GeekWhat2Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeekWhat2Do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +132,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E12FA9E62A765DDA00F8CD43 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E12FA9E72A765DF700F8CD43 /* APJapanesefont.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		E1C7D7DA2A6D1D0100E901A0 = {
 			isa = PBXGroup;
 			children = (
@@ -169,7 +177,7 @@
 				E1C7D8162A6D444900E901A0 /* Rules.swift */,
 				E12FA9D92A74EB3B00F8CD43 /* chatDecode.swift */,
 				E1C7D7EF2A6D1D0500E901A0 /* Assets.xcassets */,
-				E12FA9E42A7658E100F8CD43 /* ERIJI */,
+				E12FA9E62A765DDA00F8CD43 /* Fonts */,
 				E1C7D7F12A6D1D0500E901A0 /* LaunchScreen.storyboard */,
 				E1C7D7F42A6D1D0500E901A0 /* Info.plist */,
 				E1C7D8562A6D58CF00E901A0 /* GoogleService-Info.plist */,
@@ -303,8 +311,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E12FA9E52A7658E100F8CD43 /* ERIJI in Resources */,
 				E1C7D7F32A6D1D0500E901A0 /* LaunchScreen.storyboard in Resources */,
+				E12FA9E82A765DF700F8CD43 /* APJapanesefont.ttf in Resources */,
 				E1C7D7F02A6D1D0500E901A0 /* Assets.xcassets in Resources */,
 				E1C7D8572A6D58CF00E901A0 /* GoogleService-Info.plist in Resources */,
 			);
@@ -437,7 +445,7 @@
 				E12FA9DA2A74EB3C00F8CD43 /* chatDecode.swift in Sources */,
 				E1C7D7EB2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift in Sources */,
 				E1C7D8172A6D444900E901A0 /* Rules.swift in Sources */,
-				E12FA9DE2A75074B00F8CD43 /* SendRequestViewController.swift in Sources */,
+				E12FA9E92A76602600F8CD43 /* SendRequestViewController.swift in Sources */,
 				E1593E682A70D62500B2B915 /* ChatViewController.swift in Sources */,
 				E12FA9DC2A74F4CA00F8CD43 /* ChatView_Chat.swift in Sources */,
 				E1C7D85F2A6E579D00E901A0 /* SignInViewController.swift in Sources */,

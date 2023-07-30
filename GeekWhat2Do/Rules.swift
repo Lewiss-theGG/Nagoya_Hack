@@ -94,9 +94,16 @@ extension UIView {
     /**
      A variable that defines the univarsal  color
      */
-    public func baseColor(backgroundColor: UIColor = .systemBackground){
+    public func baseColor(backgroundColor: UIColor = .systemBackground, opacity: CGFloat = 1){
         
-        self.backgroundColor = backgroundColor
+        if backgroundColor == .clear{
+            
+            self.backgroundColor = backgroundColor.withAlphaComponent(0)
+            return
+        }
+        
+        
+        self.backgroundColor = backgroundColor.withAlphaComponent(opacity)
     }
     
     
