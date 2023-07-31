@@ -21,15 +21,6 @@ final class ChatViewController: UIViewController {
     let textviewContainer = UIView()
     
     
-    let msgField = KMPlaceholderTextView()
-    
-    
-    //let msgField = UITextField()
-    
-    
-    let requestButton = UIButton()
-    
-    
     let responseView = UITextView()
     
     
@@ -47,32 +38,35 @@ final class ChatViewController: UIViewController {
     
     var chatRecord: [ChatGPTMassage] = []
     
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        view.backgroundColor = .label
         
         
-        view.backgroundColor = .systemBackground
-        
-        
-        view.addSubview(msgField)
-        msgField.backgroundColor = .secondarySystemBackground
-        msgField.text = response
-        
-        
-        view.addSubview(requestButton)
-        requestButton.backgroundColor = .link
-        requestButton.setTitle("request", for: .normal)
-        requestButton.pressAction()
-        requestButton.addTarget(self, action: #selector(APIRequest), for: .touchUpInside)
-        
+        setView()
+        APIRequest()
+        setLeft()
+    }
+    
+    
+    func setView(){
         
         view.addSubview(responseView)
-        responseView.backgroundColor = .secondarySystemBackground
-        responseView.frame = CGRect(x: view.width/12, y: requestButton.bottom + 50, width: view.width*5/6, height: view.safetyHeight - 200)
+        responseView.baseColor(opacity: 0.25)
+        responseView.baseFont()
+        responseView.baseTextColor()
+        responseView.translatesAutoresizingMaskIntoConstraints = false
         
         
-        print(content)
+        NSLayoutConstraint.activate([
+            
+            responseView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            responseView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            responseView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            responseView.heightAnchor.constraint(equalTo: view.safeHeightAnchor, multiplier: 0.5),
+        ])
     }
     
     
@@ -91,10 +85,7 @@ final class ChatViewController: UIViewController {
                     
                     response = chatGptResponse.choices.first?.message.content ?? "no message"
                     responseView.text = response
-                    
-                    
-                    msgField.text = ""
-                    msgField.placeholder = previousQuestion
+                    print(response)
                     
                     
                     waitForResponse = false
@@ -108,5 +99,74 @@ final class ChatViewController: UIViewController {
                 }
             }
         }
+    }
+}
+
+
+
+extension ChatViewController{
+    
+    //private func task1() async -> String {
+    func request() async throws -> ChatGPTResponse{
+        
+        var requestBody:Data?{
+            
+            let message = ChatGPTMassage(role: "assistant", content: content)
+
+            
+            chatRecord.append(message)
+            
+            
+            let req = ChatGPTRequest(model: "gpt-3.5-turbo", messages: chatRecord)
+            return try? JSONEncoder().encode(req)
+        }
+        
+        
+        //URL
+        guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
+            throw NSError(domain: "URL error", code: -1)
+        }
+        
+        
+        //URLRequestを作成
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        urlRequest.allHTTPHeaderFields = ["Authorization" : "Bearer \(apiKey)",
+                                          "OpenAI-Organization": orgId,
+                                          "Content-Type" : "application/json"]
+        
+        
+        urlRequest.httpBody = requestBody
+        
+        
+        //URLSessionでRequest
+        guard let (data, urlResponse) = try? await URLSession.shared.data(for: urlRequest) else {
+            throw NSError(domain: "URLSession error", code: -1)
+        }
+        
+        
+        //ResponseをHTTPURLResponseにしてHTTPレスポンスヘッダを得る
+        guard let httpStatus = urlResponse as? HTTPURLResponse else {
+            throw NSError(domain: "HTTPURLResponse error", code: -1)
+        }
+        
+        
+        //BodyをStringに、失敗したらレスポンスコードを返す
+        guard let response = String(data: data, encoding: .utf8) else {
+            throw NSError(domain: "\(httpStatus.statusCode)", code: -1)
+        }
+        //print(response) // will print the whole json response
+        
+        
+        //JSONをChatGPTResponse構造体にする
+        guard let chatGPTResponse = try? JSONDecoder().decode(ChatGPTResponse.self, from: data) else {
+            throw NSError(domain: response, code: -1)
+        }
+        
+        
+        previousQuestion = content
+        
+        
+        return chatGPTResponse
     }
 }

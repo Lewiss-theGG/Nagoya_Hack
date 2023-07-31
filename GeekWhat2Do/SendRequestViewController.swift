@@ -231,19 +231,13 @@ class SendRequestViewController: UIViewController {
         let vc = ChatViewController()
         
         
-        guard let targetTextField_text = targetTextField.text, targetTextField_text.isEmpty != true else{
-            
-             return
-        }
+        guard let targetTextField_text = targetTextField.text, targetTextField_text.isEmpty != true else{return}
         
         
-        guard let pickerButtton_text = pickerButtton.titleLabel?.text, pickerButtton_text.isEmpty != true else{
-            
-             return
-        }
+        guard let pickerButtton_text = pickerButtton.titleLabel?.text, pickerButtton_text.isEmpty != true else{return}
         
         
-        vc.content = "\(targetTextField_text)に\(pickerButtton_text)"
+        vc.content = "\(targetTextField_text)に\(pickerButtton_text)。箇条書きで教えて"
         let nvc = UINavigationController(rootViewController: vc)
         nvc.modalPresentationStyle = .fullScreen
         self.present(nvc, animated: true)
@@ -262,6 +256,7 @@ extension SendRequestViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
         switch component {
+            
         case 0:
             return 11
             
