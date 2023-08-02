@@ -16,6 +16,8 @@
 		E12FA9E92A76602600F8CD43 /* SendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9DD2A75074B00F8CD43 /* SendRequestViewController.swift */; };
 		E12FA9EB2A78932900F8CD43 /* RecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9EA2A78932900F8CD43 /* RecordViewController.swift */; };
 		E12FA9ED2A7899A000F8CD43 /* RecordTV_Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9EC2A7899A000F8CD43 /* RecordTV_Cell.swift */; };
+		E12FA9EF2A79F76900F8CD43 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9EE2A79F76900F8CD43 /* TabBarController.swift */; };
+		E12FA9F72A7A5A1900F8CD43 /* RecordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9F62A7A5A1900F8CD43 /* RecordDetailViewController.swift */; };
 		E1593E682A70D62500B2B915 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1593E672A70D62500B2B915 /* ChatViewController.swift */; };
 		E1C7D7E72A6D1D0100E901A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */; };
 		E1C7D7E92A6D1D0100E901A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7E82A6D1D0100E901A0 /* SceneDelegate.swift */; };
@@ -60,6 +62,8 @@
 		E12FA9E72A765DF700F8CD43 /* APJapanesefont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = APJapanesefont.ttf; sourceTree = "<group>"; };
 		E12FA9EA2A78932900F8CD43 /* RecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewController.swift; sourceTree = "<group>"; };
 		E12FA9EC2A7899A000F8CD43 /* RecordTV_Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordTV_Cell.swift; sourceTree = "<group>"; };
+		E12FA9EE2A79F76900F8CD43 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		E12FA9F62A7A5A1900F8CD43 /* RecordDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailViewController.swift; sourceTree = "<group>"; };
 		E1593E672A70D62500B2B915 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		E1C7D7E32A6D1D0100E901A0 /* GeekWhat2Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeekWhat2Do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +148,36 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		E12FA9F12A7A36E900F8CD43 /* Authenticate */ = {
+			isa = PBXGroup;
+			children = (
+				E1C7D8582A6D5A8800E901A0 /* AuthViewController.swift */,
+				E1C7D85E2A6E579D00E901A0 /* SignInViewController.swift */,
+				E1C7D8602A6E626C00E901A0 /* ResetPWDViewController.swift */,
+			);
+			path = Authenticate;
+			sourceTree = "<group>";
+		};
+		E12FA9F22A7A370300F8CD43 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				E12FA9DD2A75074B00F8CD43 /* SendRequestViewController.swift */,
+				E1593E672A70D62500B2B915 /* ChatViewController.swift */,
+				E12FA9DB2A74F4CA00F8CD43 /* ChatView_Chat.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		E12FA9F32A7A372000F8CD43 /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				E12FA9EA2A78932900F8CD43 /* RecordViewController.swift */,
+				E12FA9F62A7A5A1900F8CD43 /* RecordDetailViewController.swift */,
+				E12FA9EC2A7899A000F8CD43 /* RecordTV_Cell.swift */,
+			);
+			path = Record;
+			sourceTree = "<group>";
+		};
 		E1C7D7DA2A6D1D0100E901A0 = {
 			isa = PBXGroup;
 			children = (
@@ -171,17 +205,13 @@
 			children = (
 				E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */,
 				E1C7D7E82A6D1D0100E901A0 /* SceneDelegate.swift */,
-				E1C7D7EA2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift */,
-				E1C7D8582A6D5A8800E901A0 /* AuthViewController.swift */,
-				E1C7D85E2A6E579D00E901A0 /* SignInViewController.swift */,
-				E1C7D8602A6E626C00E901A0 /* ResetPWDViewController.swift */,
-				E12FA9DD2A75074B00F8CD43 /* SendRequestViewController.swift */,
-				E1593E672A70D62500B2B915 /* ChatViewController.swift */,
-				E12FA9DB2A74F4CA00F8CD43 /* ChatView_Chat.swift */,
-				E12FA9EA2A78932900F8CD43 /* RecordViewController.swift */,
-				E12FA9EC2A7899A000F8CD43 /* RecordTV_Cell.swift */,
+				E12FA9EE2A79F76900F8CD43 /* TabBarController.swift */,
+				E12FA9F12A7A36E900F8CD43 /* Authenticate */,
+				E12FA9F22A7A370300F8CD43 /* Request */,
+				E12FA9F32A7A372000F8CD43 /* Record */,
 				E1C7D8162A6D444900E901A0 /* Rules.swift */,
 				E12FA9D92A74EB3B00F8CD43 /* chatDecode.swift */,
+				E1C7D7EA2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift */,
 				E1C7D7EF2A6D1D0500E901A0 /* Assets.xcassets */,
 				E12FA9E62A765DDA00F8CD43 /* Fonts */,
 				E1C7D7F12A6D1D0500E901A0 /* LaunchScreen.storyboard */,
@@ -459,6 +489,8 @@
 				E1C7D85F2A6E579D00E901A0 /* SignInViewController.swift in Sources */,
 				E1C7D8592A6D5A8800E901A0 /* AuthViewController.swift in Sources */,
 				E1C7D8612A6E626C00E901A0 /* ResetPWDViewController.swift in Sources */,
+				E12FA9EF2A79F76900F8CD43 /* TabBarController.swift in Sources */,
+				E12FA9F72A7A5A1900F8CD43 /* RecordDetailViewController.swift in Sources */,
 				E1C7D7E72A6D1D0100E901A0 /* AppDelegate.swift in Sources */,
 				E1C7D7E92A6D1D0100E901A0 /* SceneDelegate.swift in Sources */,
 			);

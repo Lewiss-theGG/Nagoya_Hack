@@ -18,18 +18,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         if Auth.auth().currentUser?.uid != nil {
             
-            // ログインしている場合
+            // if loggged in
             if let windowScene = scene as? UIWindowScene {
                 
-                let window = UIWindow(windowScene: windowScene)
-                window.rootViewController = DetailRecordView.init()
-                self.window = window
-                window.makeKeyAndVisible()
+//                let window = UIWindow(windowScene: windowScene)
+//                window.rootViewController = RecordViewController.init()
+//                self.window = window
+//                window.makeKeyAndVisible()
+                
+                
+                guard let windowScene = (scene as? UIWindowScene) else { return }
+                window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+                window?.windowScene = windowScene
+                window?.rootViewController = TabBarController()
+                window?.makeKeyAndVisible()
             }
         }
         else {
             
-            // ログインしている場合
+            // If not logged-in
             if let windowScene = scene as? UIWindowScene {
                 
                 let window = UIWindow(windowScene: windowScene)

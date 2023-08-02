@@ -170,6 +170,8 @@ class AuthViewController: ViewWithAnimationViewController {
 
 
 import FirebaseAuth
+import Firebase
+import FirebaseStorage
 
 
 extension AuthViewController{
@@ -202,6 +204,20 @@ extension AuthViewController{
             }
             self.showErrorIfNeeded(error)
         }
+    }
+    
+    
+    // User情報をFirebaseFirestoreへ保存する処理
+    private func createUserToFirestore(name: String, email: String, profileImageName: String?, uid: String) {
+        
+        // 保存内容を定義する（辞書型）
+        let docData = ["email": email,
+                       "userName": name,
+                       //"profileImageName": profileImageName,
+                       "createdAt": Timestamp()] as [String : Any?]
+        
+        // FirebaseFirestoreへ保存
+        SignUpModel().createUserInfo(uid: uid, docDate: docData as [String : Any])
     }
     
     
@@ -244,10 +260,16 @@ extension AuthViewController{
     
     private func jumpToMain(){
         
-        let vc = mainViewController()
+        let vc = TabBarController()
         let nvc = UINavigationController(rootViewController: vc)
         nvc.modalPresentationStyle = .fullScreen
-        present(nvc, animated: true)
+        present(nvc, animated: false) { [self] in
+            
+            self.createUserToFirestore(name: nameTextField.text!,
+                                       email: emailTextField.text!,
+                                       profileImageName: String(),
+                                       uid: Auth.auth().currentUser!.uid)
+        }
     }
 }
 
@@ -270,251 +292,60 @@ class mainViewController: UIViewController{
 }
 
 
-////
-////  AuthViewController.swift
-////  GeekWhat2Do
-////
-////  Created by gkin on 2023/07/23.
-////
-//
-//import UIKit
-//import FirebaseAuth
-//
-//
-//class AuthViewController2: ViewWithAnimationViewController{
-//
-//    override func viewDidLoad() {
-//
-//        super.viewDidLoad()
-//
-//
-//        setView()
-//    }
-//
-//
-//    func setView(){
-//
-//        view.addSubview(contentView)
-//        contentView.backgroundColor = .clear
-//        contentView.layer.cornerRadius = 10
-//        contentView.clipsToBounds = true
-//        contentView.translatesAutoresizingMaskIntoConstraints = false
-//
-//
-//        contentView.addSubview(viewWithAlpha)
-//        viewWithAlpha.alpha = 0.25
-//        viewWithAlpha.backgroundColor = .systemGray2
-//        viewWithAlpha.layer.cornerRadius = 10
-//        viewWithAlpha.clipsToBounds = true
-//        viewWithAlpha.translatesAutoresizingMaskIntoConstraints = false
-//
-//
-//        contentView.addSubview(nameLabel)
-//        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-//        nameLabel.baseFont(font: .monospacedSystemFont(ofSize: 20, weight: .semibold))
-//        nameLabel.baseTextColor()
-//        nameLabel.backgroundColor = .clear
-//        nameLabel.text = "ニックネーム"
-//
-//
-//        contentView.addSubview(nameTextField)
-//        nameTextField.translatesAutoresizingMaskIntoConstraints = false
-//        nameTextField.baseTextColor()
-//        nameTextField.borderStyle = .roundedRect
-//        nameTextField.backgroundColor = .clear
-//        nameTextField.placeholder = "ニックネームを入力して下さい"
-//        nameTextField.textFieldDone()
-//
-//
-//        contentView.addSubview(emailLabel)
-//        emailLabel.translatesAutoresizingMaskIntoConstraints = false
-//        emailLabel.baseFont(font: .monospacedSystemFont(ofSize: 20, weight: .semibold))
-//        emailLabel.baseTextColor()
-//        emailLabel.backgroundColor = .clear
-//        emailLabel.text = "メールアドレス"
-//
-//
-//        contentView.addSubview(emailTextField)
-//        emailTextField.baseFont()
-//        emailTextField.baseTextColor()
-//        emailTextField.borderStyle = .roundedRect
-//        emailTextField.backgroundColor = .clear
-//        emailTextField.translatesAutoresizingMaskIntoConstraints = false
-//        emailTextField.placeholder = "メールアドレスを入力して下さい"
-//        emailTextField.textFieldDone()
-//
-//
-//        contentView.addSubview(pwdLabel)
-//        pwdLabel.translatesAutoresizingMaskIntoConstraints = false
-//        pwdLabel.baseFont(font: .monospacedSystemFont(ofSize: 20, weight: .semibold))
-//        pwdLabel.baseTextColor()
-//        pwdLabel.backgroundColor = .clear
-//        pwdLabel.text = "パスワード"
-//
-//
-//        contentView.addSubview(pwdTextField)
-//        pwdTextField.translatesAutoresizingMaskIntoConstraints = false
-//        pwdTextField.baseFont()
-//        pwdTextField.baseTextColor()
-//        pwdTextField.borderStyle = .roundedRect
-//        pwdTextField.backgroundColor = .clear
-//        pwdTextField.placeholder = "パスワードを入力して下さい"
-//        pwdTextField.textFieldDone()
-//
-//
-//        view.addSubview(registerButton)
-//        registerButton.translatesAutoresizingMaskIntoConstraints = false
-//        registerButton.backgroundColor = .clear
-//        registerButton.clipsToBounds = true
-//        registerButton.layer.cornerRadius = 20
-//        registerButton.backgroundColor = .link
-//        registerButton.setTitle("ユーザー登録", for: .normal)
-//        registerButton.pressAction()
-//        registerButton.addTarget(self, action: #selector(jumpToAuth), for: .touchUpInside)
-//
-//
-//        NSLayoutConstraint.activate([
-//
-//            contentView.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 75),
-//            contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            contentView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-//            contentView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4),
-//
-//
-//            viewWithAlpha.topAnchor.constraint(equalTo: contentView.topAnchor),
-//            viewWithAlpha.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-//            viewWithAlpha.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-//            viewWithAlpha.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-//
-//
-//            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-//            nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-//            nameLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.9),
-//            nameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 1/6, constant: -5),
-//
-//
-//            nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
-//            nameTextField.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-//            nameTextField.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
-//            nameTextField.heightAnchor.constraint(equalTo: nameLabel.heightAnchor),
-//
-//
-//            emailLabel.topAnchor.constraint(equalTo: nameTextField.bottomAnchor),
-//            emailLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-//            emailLabel.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
-//            emailLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor),
-//
-//
-//            emailTextField.topAnchor.constraint(equalTo: emailLabel.bottomAnchor),
-//            emailTextField.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-//            emailTextField.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
-//            emailTextField.heightAnchor.constraint(equalTo: nameLabel.heightAnchor),
-//
-//
-//            pwdLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
-//            pwdLabel.centerXAnchor.constraint(equalTo: nameLabel.centerXAnchor),
-//            pwdLabel.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
-//            pwdLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor),
-//
-//
-//            pwdTextField.topAnchor.constraint(equalTo: pwdLabel.bottomAnchor),
-//            pwdTextField.centerXAnchor.constraint(equalTo: nameLabel.centerXAnchor),
-//            pwdTextField.widthAnchor.constraint(equalTo: nameLabel.widthAnchor),
-//            pwdTextField.heightAnchor.constraint(equalTo: nameLabel.heightAnchor),
-//
-//
-//            registerButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -20),
-//            registerButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-//            registerButton.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.8),
-//            registerButton.heightAnchor.constraint(equalToConstant: 40),
-//        ])
-//    }
-//}
-//
-//
-//extension AuthViewController2{
-//
-//    @objc func jumpToAuth(){
-//
-//        let email = emailTextField.text ?? ""
-//        let password = pwdTextField.text ?? ""
-//        let name = nameTextField.text ?? ""
-//
-//        signUp(email: email, password: password, name: name)
-//    }
-//
-//
-//    private func signUp(email: String, password: String, name: String) {
-//
-//        Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
-//
-//            guard let self = self else { return }
-//
-//
-//            if let user = result?.user {
-//
-//                self.updateDisplayName(name, of: user)
-//            }
-//
-//
-//            self.showError(error)
-//        }
-//    }
-//
-//
-//    private func updateDisplayName(_ name: String, of user: User) {
-//
-//        let request = user.createProfileChangeRequest()
-//        request.displayName = name
-//
-//
-//        request.commitChanges() { [weak self] error in
-//
-//            guard let self = self else { return }
-//
-//
-//            if error != nil {
-//
-//                self.sendEmailVerification(to: user)
-//            }
-//
-//
-//            self.showError(error)
-//        }
-//    }
-//
-//
-//    private func sendEmailVerification(to user: User) {
-//
-//        user.sendEmailVerification() { [weak self] error in
-//
-//
-//            guard let self = self else { return }
-//
-//
-//            if error != nil {
-//
-//                self.showSignUpCompletion()
-//            }
-//
-//
-//            self.showError(error)
-//        }
-//    }
-//
-//
-//    private func showSignUpCompletion() {
-//        // 完了したことを表示する
-//    }
-//
-//
-//    private func showError(_ errorOrNil: Error?) {
-//        // エラーがなければ何もしません
-//        guard let _ = errorOrNil else { return }
-//
-//        let message = "エラーが起きました" // ここは後述しますが、とりあえず固定文字列
-//        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//        present(alert, animated: true, completion: nil)
-//    }
-//}
+//delegateはweak参照したいため、classを継承する
+protocol SignUpModelDelegate: AnyObject {
+    func createImageToFirestorageAction()
+    func createUserToFirestoreAction(fileName: String?)
+    func completedRegisterUserInfoAction()
+}
+
+
+class SignUpModel {
+    
+    // delegateはメモリリークを回避するためweak参照する
+    weak var delegate: SignUpModelDelegate?
+
+    func createUser(email: String, password: String) {
+        // FirebaseAuthへ保存
+        Auth.auth().createUser(withEmail: email, password: password) { (res, err) in
+            if let err = err {
+                print("FirebaseAuthへの保存に失敗しました。\(err)")
+                // ユーザー情報の登録が失敗した時の処理
+                return
+            }
+            print("FirebaseAuthへの保存に成功しました。")
+            // FirebaseAuthへ保存完了 -> FirebaseStorageへ保存処理
+            self.delegate?.createImageToFirestorageAction()
+        }
+    }
+
+    func creatrImage(fileName: String, uploadImage: Data) {
+        // FirebaseStorageへ保存
+        let storageRef = Storage.storage().reference().child("profile_image").child(fileName)
+        storageRef.putData(uploadImage, metadata: nil) { (metadate, err) in
+            if let err = err {
+                print("Firestorageへの保存に失敗しました。\(err)")
+                // ユーザー情報の登録が失敗した時の処理
+                return
+            }
+            print("Firestorageへの保存に成功しました。")
+            // FirebaseStorageへ保存完了 -> FirebaseFirestoreへ保存処理
+            self.delegate?.createUserToFirestoreAction(fileName: fileName)
+        }
+    }
+
+    func createUserInfo(uid: String, docDate: [String : Any]) {
+        // FirebaseFirestoreへ保存
+        Firestore.firestore().collection("Users").document(uid).setData(docDate as [String : Any]) { (err) in
+            if let err = err {
+                print("Firestoreへの保存に失敗しました。\(err)")
+                // ユーザー情報の登録が失敗した時の処理
+                return
+            }
+            print("Firestoreへの保存に成功しました。")
+            // ユーザー情報の登録が完了した時の処理
+            self.delegate?.completedRegisterUserInfoAction()
+        }
+    }
+
+}

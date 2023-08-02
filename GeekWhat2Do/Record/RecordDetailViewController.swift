@@ -1,88 +1,14 @@
 //
-//  RecordViewController.swift
+//  RecordDetailViewController.swift
 //  GeekWhat2Do
 //
-//  Created by gkin on 2023/08/01.
+//  Created by gkin on 2023/08/02.
 //
 
 import UIKit
-
-class RecordViewController: UIViewController {
-    
-    let displayTableView = UITableView()
-    
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        
-        view.baseColor(backgroundColor: .systemBackground, opacity: 1)
-        
-        
-        setView()
-        setLeft()
-    }
-    
-    
-    func setView(){
-        
-        view.addSubview(displayTableView)
-        displayTableView.delegate = self
-        displayTableView.dataSource = self
-        displayTableView.register(RecordTV_Cell.self, forCellReuseIdentifier: "RecordTV_Cell")
-        displayTableView.translatesAutoresizingMaskIntoConstraints = false
-        displayTableView.backgroundColor = .clear
-        
-        
-        NSLayoutConstraint.activate([
-            
-            displayTableView.topAnchor.constraint(equalTo: view.safeTopAnchor),
-            displayTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            displayTableView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -4),
-            displayTableView.heightAnchor.constraint(equalTo: view.heightAnchor),
-        ])
-    }
-}
-
-
-extension RecordViewController: UITableViewDelegate, UITableViewDataSource{
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 3
-    }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RecordTV_Cell", for: indexPath) as! RecordTV_Cell
-        cell.setCellView()
-        cell.backgroundColor = .clear
-        cell.overLayButton.tag = indexPath.row
-        cell.overLayButton.addTarget(self, action: #selector(cellSelected), for: .touchUpInside)
-        
-        
-        let selectedBackgroundView = UIView(frame: cell.contentView.frame)
-        selectedBackgroundView.backgroundColor = .clear
-        cell.selectedBackgroundView = selectedBackgroundView
-        
-        
-        return cell
-    }
-    
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return displayTableView.height / 4.2
-    }
-    
-    
-    @objc func cellSelected(_ sender: UIButton){
-        
-        print(sender.tag)
-    }
-}
-
+import Firebase
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 
 class DetailRecordView: UIViewController{
@@ -100,6 +26,13 @@ class DetailRecordView: UIViewController{
     
     
     let aimLabel = UILabel()
+    
+    
+    var dreamValue = String()
+    
+    
+    let sampleView = UIButton()
+    var counter: Int = 0
     
     
     override func viewDidLoad() {
@@ -147,7 +80,7 @@ class DetailRecordView: UIViewController{
         titleLabel.minimumScaleFactor = 0.71
         titleLabel.clipsToBounds = true
         titleLabel.layer.cornerRadius = 10
-        titleLabel.text = "サッカー選手になりたい"
+        titleLabel.text = "\(dreamValue)選手になりたい"
         
         
         baseView.addSubview(aimLabel)
@@ -157,6 +90,13 @@ class DetailRecordView: UIViewController{
         aimLabel.baseTextColor()
         aimLabel.text = "7/27日から1年で達成する"  //・・・
         aimLabel.textAlignment = .left
+        
+        
+        view.addSubview(sampleView)
+        sampleView.frame = CGRect(x: 100, y: 600, width: view.width-200, height: view.width-600)
+        sampleView.baseColor(backgroundColor: .red)
+        sampleView.pressAction()
+        sampleView.addTarget(self, action: #selector(move2), for: .touchUpInside)
         
         
         NSLayoutConstraint.activate([
@@ -190,5 +130,22 @@ class DetailRecordView: UIViewController{
             aimLabel.widthAnchor.constraint(equalTo: titleLabel.widthAnchor),
             aimLabel.bottomAnchor.constraint(equalTo: baseView.bottomAnchor, constant: -10),
         ])
+    }
+    
+    
+    @objc func move2(){
+        
+        if counter%2 == 1{
+            
+            sampleView.frame = CGRect(x: 100, y: 600/4, width: view.width-200, height: view.width-600)
+            sampleView.baseColor(backgroundColor: .red)
+            counter += 1
+        }
+        else{
+            
+            sampleView.frame = CGRect(x: 100, y: 600, width: view.width-200, height: view.width-600)
+            sampleView.baseColor(backgroundColor: .link)
+            counter += 1
+        }
     }
 }

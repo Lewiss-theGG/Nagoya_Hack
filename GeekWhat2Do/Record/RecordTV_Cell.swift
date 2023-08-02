@@ -83,7 +83,7 @@ class RecordTV_Cell: UITableViewCell {
         titleLabel.minimumScaleFactor = 0.71
         titleLabel.clipsToBounds = true
         titleLabel.layer.cornerRadius = 10
-        titleLabel.text = "サッカー選手になりたい"
+        //titleLabel.text = "サッカー選手になりたい"
         
         
         contentView.addSubview(overLayButton)
