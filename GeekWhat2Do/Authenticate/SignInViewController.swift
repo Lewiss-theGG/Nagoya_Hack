@@ -13,9 +13,8 @@ class SignInViewController: ViewWithAnimationViewController {
 
     override func viewDidLoad() {
 
+        
         super.viewDidLoad()
-
-
         setView()
     }
 

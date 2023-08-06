@@ -6,7 +6,10 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestoreSwift
 import KMPlaceholderTextView
+import AVFoundation
 
 
 let apiKey = "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"
@@ -17,39 +20,67 @@ let orgId = "org-LhxSkR9pTVukad8pbSLrdN5j"
 
 final class ChatViewController: UIViewController {
     
-    
-    let textviewContainer = UIView()
+    let backGroundGIFView = UIView()
     
     
     let responseView = UITextView()
     
     
-    var response = String()
-    
-    
-    var content = String()
+    var chatResponse = String()
     
     
     var waitForResponse = false
     
     
-    var previousQuestion = String()
-    
-    
     var chatRecord: [ChatGPTMassage] = []
     
+    
+    var targetYear = Int()
+    
+    
+    var targetMonth = Int()
+    
+    
+    var targetValue = String()
+    
+    
+    var response = Response(todo: [], detail: [], map: [])
+
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        view.backgroundColor = .label
+        view.backgroundColor = .systemBackground
+        
+        
+        view.addSubview(backGroundGIFView)
+        backGroundGIFView.frame = view.frame
         
         
         setView()
         APIRequest()
         setLeft()
+        playVideo()
     }
     
+    
+    func playVideo() {
+        
+        guard let path = Bundle.main.path(forResource: "backvid", ofType: "mp4") else {
+            print("Error: Video file not found")
+            return
+        }
+        
+        
+        let player = AVPlayer (url: URL(fileURLWithPath: path))
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = self.view.bounds
+        playerLayer.videoGravity = .resizeAspectFill
+
+        self.backGroundGIFView.layer.addSublayer(playerLayer)
+        
+        player.play()
+    }
     
     func setView(){
         
@@ -83,16 +114,77 @@ final class ChatViewController: UIViewController {
                     let chatGptResponse = try await request()
                     
                     
-                    response = chatGptResponse.choices.first?.message.content ?? "no message"
-                    responseView.text = response
-                    print(response)
+                    chatResponse = chatGptResponse.choices.first?.message.content ?? "no message"
+                    responseView.text = chatResponse
                     
                     
-                    waitForResponse = false
+                    var checker = 0
+                    for i in chatResponse.components(separatedBy: "\n"){
+                        
+                        if i.contains("やるべき事"){
+                            
+                            continue
+                        }
+                        
+                        if i.contains("具体的なアドバイス"){
+                            
+                            checker += 1
+                            continue
+                        }
+                        
+                        if i.contains("ロードマップ"){
+                            
+                            checker += 1
+                            continue
+                        }
+                        
+                        let del: Set<Character> = [" ", "-"] // 削除する文字を指定
+                         
+                        // 文字列から "c" を削除
+                        var l = i
+                        l.removeAll(where: { del.contains($0)})
+                        
+                        
+                        if l == ""{
+                            
+                            continue
+                        }
+                        
+                        switch checker {
+                            
+                        case 0:
+                            
+                            response.todo.append(l)
+                        case 1:
+                            
+                            response.detail.append(l)
+                        case 2:
+                            
+                            response.map.append(l)
+                            
+                        default:
+                            break
+                        }
+                    }
+                    
+                    
+                    let saveData: Record = Record(whatToBe: targetValue, declaredAt: Date(), period_Y: targetYear, period_M: targetMonth, response: response)
+                    
+                    
+                    do {
+
+                        try chatData().putData(request: saveData)
+                    }
+                    catch{
+
+                        print(error)
+                    }
+                    
+                    
                 }catch{
                     
                     let nsError = error as NSError
-                    response = nsError.domain
+                    print(nsError.domain)
                     
                     
                     waitForResponse = false
@@ -111,7 +203,7 @@ extension ChatViewController{
         
         var requestBody:Data?{
             
-            let message = ChatGPTMassage(role: "assistant", content: content)
+            let message = ChatGPTMassage(role: "assistant", content: "以下のテキストに対して、物知りの占い師が22歳の人にアドバイスする様に答えて下さい。まず、やるべき事を出力し、それぞれについて具体的なアドバイスをして下さい。最後に具体的なロードマップを作成して下さい。但し、具体的なアドバイスは箇条書きでお願いします。\n\n希望する形式：\nやるべき事：\n具体的なアドバイス:\nロードマップ：\n\nテキスト：\(targetYear)年\(targetMonth)ヶ月で\(targetValue)になりたい。")
 
             
             chatRecord.append(message)
@@ -164,9 +256,103 @@ extension ChatViewController{
         }
         
         
-        previousQuestion = content
-        
-        
         return chatGPTResponse
     }
 }
+
+
+
+extension ChatViewController{
+    
+    
+    
+}
+
+
+class chatData{
+    
+    @Published var request = [Record]()
+    
+    
+    final func putData(request: Record) throws {
+        
+        do {
+            
+            try Database().records.addDocument(from: request)
+        }
+        catch{
+            
+            print(error)
+        }
+    }
+    
+    
+    final func getData() throws{
+        
+        Database().records.addSnapshotListener { querySnapshot, error in
+            
+            guard let documents = querySnapshot?.documents else{
+                
+                print("error?.localizedDescription")
+                return
+            }
+            
+            
+            self.request = documents.compactMap { (queryDocumentSnapshot) -> Record? in
+                
+                return try? queryDocumentSnapshot.data(as: Record.self)
+            }
+        }
+    }
+}
+
+
+struct UserInfo: Identifiable, Codable{
+    
+    @DocumentID var id: String? = UUID().uuidString
+    
+    
+    var createdAt: String
+    var email: String
+    var userName: Int
+    var userImage: String
+}
+
+
+struct Record: Identifiable, Codable{
+    
+    @DocumentID var id: String? = UUID().uuidString
+    
+    
+    var whatToBe: String
+    var declaredAt: Date
+    var period_Y: Int
+    var period_M: Int
+    var response: Response
+    
+    
+    enum CodingKyes: String, CodingKey{
+        
+        case title
+        case author
+        case whatToBe = "what2b"
+    }
+}
+
+
+struct Response: Codable{
+    
+    var todo : [String]
+    var detail : [String]
+    var map : [String]
+
+    
+    enum CodingKeys: String, CodingKey {
+        case todo = "やるべき事"
+        case detail = "具体的なアドバイス"
+        case map = "ロードマップ"
+    }
+}
+
+
+

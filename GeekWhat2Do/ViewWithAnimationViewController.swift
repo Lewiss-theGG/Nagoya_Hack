@@ -7,10 +7,12 @@
 
 import UIKit
 
+import AVFoundation
+
 
 class ViewWithAnimationViewController: UIViewController {
     
-    let backGroundGIFView = UIImageView()
+    let backGroundGIFView = UIView()
     
     
     let contentView = UIView()
@@ -49,8 +51,28 @@ class ViewWithAnimationViewController: UIViewController {
         
         
         view.addSubview(backGroundGIFView)
-        backGroundGIFView.backgroundColor = .systemBackground
         backGroundGIFView.frame = view.frame
+        
+        
+        playVideo()
+    }
+    
+    
+    func playVideo() {
+        
+        guard let path = Bundle.main.path(forResource: "backvid", ofType: "mp4") else {
+            print("Error: Video file not found")
+            return
+        }
+        
+        
+        let player = AVPlayer (url: URL(fileURLWithPath: path))
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = self.view.bounds
+        playerLayer.videoGravity = .resizeAspectFill
+
+        self.backGroundGIFView.layer.addSublayer(playerLayer)
+        
+        player.play()
     }
 }
-

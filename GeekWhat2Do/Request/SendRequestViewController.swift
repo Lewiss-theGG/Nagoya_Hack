@@ -6,7 +6,12 @@
 //
 
 import UIKit
+import FirebaseFirestoreSwift
 import KMPlaceholderTextView
+
+
+
+var apiImg = UIImage()
 
 
 class SendRequestViewController: UIViewController {
@@ -47,11 +52,16 @@ class SendRequestViewController: UIViewController {
     let returnButton = UIButton()
     
     
+//    let request = UI
+
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        view.backgroundColor = .darkGray
         
         
+        setTabBar()
         setView()
     }
     
@@ -64,6 +74,7 @@ class SendRequestViewController: UIViewController {
         memoSheetImageView.clipsToBounds = true
         memoSheetImageView.contentMode = .scaleAspectFit
         memoSheetImageView.alpha = 0.8
+        memoSheetImageView.backgroundColor = .clear
         
         
         view.addSubview(targetLabel)
@@ -155,14 +166,14 @@ class SendRequestViewController: UIViewController {
         NSLayoutConstraint.activate([
             
             memoSheetImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            memoSheetImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-            memoSheetImageView.heightAnchor.constraint(equalTo: view.safeHeightAnchor, multiplier: 0.8),
-            memoSheetImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            memoSheetImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.95),
+            memoSheetImageView.heightAnchor.constraint(equalTo: memoSheetImageView.widthAnchor, multiplier: 6/5),
+            memoSheetImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50),
             
             
-            targetLabel.topAnchor.constraint(equalTo: memoSheetImageView.topAnchor, constant: 150),
-            targetLabel.leftAnchor.constraint(equalTo: memoSheetImageView.leftAnchor, constant: 20),
-            targetLabel.rightAnchor.constraint(equalTo: memoSheetImageView.rightAnchor, constant: -20),
+            targetLabel.topAnchor.constraint(equalTo: memoSheetImageView.topAnchor, constant: 50),
+            targetLabel.widthAnchor.constraint(equalTo: memoSheetImageView.widthAnchor, multiplier: 0.8),
+            targetLabel.centerXAnchor.constraint(equalTo: memoSheetImageView.centerXAnchor),
             targetLabel.heightAnchor.constraint(equalToConstant: 50),
             
             
@@ -173,14 +184,14 @@ class SendRequestViewController: UIViewController {
             
             
             typeCounterLabel.topAnchor.constraint(equalTo: targetTextField.bottomAnchor, constant: 4),
-            typeCounterLabel.centerXAnchor.constraint(equalTo: targetTextField.centerXAnchor),
+            typeCounterLabel.rightAnchor.constraint(equalTo: targetTextField.rightAnchor),
             typeCounterLabel.widthAnchor.constraint(equalTo: targetTextField.widthAnchor),
             typeCounterLabel.heightAnchor.constraint(equalToConstant: 30),
             
             
             targetYearLabel.topAnchor.constraint(equalTo: typeCounterLabel.bottomAnchor, constant: 15),
-            targetYearLabel.leftAnchor.constraint(equalTo: memoSheetImageView.leftAnchor, constant: 20),
-            targetYearLabel.rightAnchor.constraint(equalTo: memoSheetImageView.rightAnchor, constant: -20),
+            targetYearLabel.widthAnchor.constraint(equalTo: memoSheetImageView.widthAnchor, multiplier: 0.8),
+            targetYearLabel.centerXAnchor.constraint(equalTo: memoSheetImageView.centerXAnchor),
             targetYearLabel.heightAnchor.constraint(equalToConstant: 50),
             
             
@@ -190,7 +201,7 @@ class SendRequestViewController: UIViewController {
             pickerButtton.heightAnchor.constraint(equalToConstant: 50),
             
             
-            targetPicker.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
+            targetPicker.topAnchor.constraint(equalTo: memoSheetImageView.bottomAnchor, constant: 20),
             targetPicker.widthAnchor.constraint(equalTo: memoSheetImageView.widthAnchor, multiplier: 0.8),
             targetPicker.centerXAnchor.constraint(equalTo: memoSheetImageView.centerXAnchor),
             targetPicker.heightAnchor.constraint(equalTo: view.safeHeightAnchor, multiplier: 0.15),
@@ -237,10 +248,22 @@ class SendRequestViewController: UIViewController {
         guard let pickerButtton_text = pickerButtton.titleLabel?.text, pickerButtton_text.isEmpty != true else{return}
         
         
-        vc.content = "\(targetTextField_text)に\(pickerButtton_text)。箇条書きで教えて"
+        vc.targetYear = targetYear
+        
+        
+        vc.targetMonth = targetMonth
+        
+        
+        vc.targetValue = targetTextField_text
+        
+        
+        
         let nvc = UINavigationController(rootViewController: vc)
         nvc.modalPresentationStyle = .fullScreen
-        self.present(nvc, animated: true)
+        self.present(nvc, animated: true) {
+            
+            self.postRequest(user_text: targetTextField_text, user_id: Authed_User().auth)
+        }
     }
 }
 
@@ -350,6 +373,8 @@ extension SendRequestViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 }
 
 
+
+
 extension SendRequestViewController: UITextViewDelegate{
     
     func textViewDidChange(_ textView: UITextView) {
@@ -362,4 +387,39 @@ extension SendRequestViewController: UITextViewDelegate{
         
         typeCounterLabel.text = "\(textView.text.count) / 50"
     }
+    
+    
+    func postRequest(user_text: String, user_id: String) {
+        let url = URL(string: "https://7e6e-34-91-50-188.ngrok.io/geek/")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        // リクエストボディを作成
+        let json: [String: Any] = [
+            "user_id" : user_id,
+            "user_text" : user_text
+        ]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: json)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            // Received data is your JPEG image data
+            if let image = UIImage(data: data) {
+                // Handle the received image
+                // For example, you can display it in an UIImageView
+                DispatchQueue.main.async {
+
+                    apiImg = image
+                }
+            }
+        }
+        task.resume()
+    }
+
 }

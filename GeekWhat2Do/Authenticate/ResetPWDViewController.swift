@@ -13,9 +13,8 @@ class ResetPWDViewController: ViewWithAnimationViewController {
 
     override func viewDidLoad() {
 
+        
         super.viewDidLoad()
-
-
         setView()
     }
 

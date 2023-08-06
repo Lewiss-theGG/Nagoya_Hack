@@ -11,9 +11,8 @@ class AuthViewController: ViewWithAnimationViewController {
     
     override func viewDidLoad() {
         
+        
         super.viewDidLoad()
-        
-        
         setView()
     }
     
@@ -334,6 +333,7 @@ class SignUpModel {
         }
     }
 
+    
     func createUserInfo(uid: String, docDate: [String : Any]) {
         // FirebaseFirestoreへ保存
         Firestore.firestore().collection("Users").document(uid).setData(docDate as [String : Any]) { (err) in

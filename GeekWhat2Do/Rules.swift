@@ -201,15 +201,24 @@ extension UILabel{
 
 extension UIViewController{
     
-    public func setLeft(){
+    public func setLeft(leftBarTitle : String = "＜　完了"){
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "＜　完了", style: .done,target: self, action: #selector(showValue))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "\(leftBarTitle)", style: .done,target: self, action: #selector(showValue))
     }
     
     
     @objc func showValue(){
         
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    func setTabBar(){
+        
+        let appearance = UITabBarAppearance()
+        appearance.backgroundColor =  UIColor.secondarySystemBackground
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
     }
 }
 

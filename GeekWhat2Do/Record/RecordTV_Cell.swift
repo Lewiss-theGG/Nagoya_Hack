@@ -70,7 +70,6 @@ class RecordTV_Cell: UITableViewCell {
         topLabel.baseColor()
         topLabel.baseFont(font: .monospacedSystemFont(ofSize: 22, weight: .semibold))
         topLabel.baseTextColor()
-        topLabel.text = "7/27日に宣言！"  //・・・
         topLabel.textAlignment = .left
         
         
@@ -83,7 +82,6 @@ class RecordTV_Cell: UITableViewCell {
         titleLabel.minimumScaleFactor = 0.71
         titleLabel.clipsToBounds = true
         titleLabel.layer.cornerRadius = 10
-        //titleLabel.text = "サッカー選手になりたい"
         
         
         contentView.addSubview(overLayButton)
@@ -108,7 +106,6 @@ class RecordTV_Cell: UITableViewCell {
         aimLabel.baseColor()
         aimLabel.baseFont()
         aimLabel.baseTextColor()
-        aimLabel.text = "達成目標：1年"  //・・・
         aimLabel.textAlignment = .left
         
         
