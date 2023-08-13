@@ -23,7 +23,7 @@ final class ChatViewController: UIViewController {
     let backGroundGIFView = UIView()
     
     
-    let responseView = UITextView()
+    //let responseView = UITextView()
     
     
     var chatResponse = String()
@@ -45,7 +45,10 @@ final class ChatViewController: UIViewController {
     
     
     var response = Response(todo: [], detail: [], map: [])
-
+    
+    
+    var apiImgURL = String()
+    
     
     override func viewDidLoad() {
         
@@ -76,7 +79,7 @@ final class ChatViewController: UIViewController {
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame = self.view.bounds
         playerLayer.videoGravity = .resizeAspectFill
-
+        
         self.backGroundGIFView.layer.addSublayer(playerLayer)
         
         player.play()
@@ -84,20 +87,20 @@ final class ChatViewController: UIViewController {
     
     func setView(){
         
-        view.addSubview(responseView)
-        responseView.baseColor(opacity: 0.25)
-        responseView.baseFont()
-        responseView.baseTextColor()
-        responseView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        NSLayoutConstraint.activate([
-            
-            responseView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            responseView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            responseView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            responseView.heightAnchor.constraint(equalTo: view.safeHeightAnchor, multiplier: 0.5),
-        ])
+//        view.addSubview(responseView)
+//        responseView.baseColor(opacity: 0.25)
+//        responseView.baseFont()
+//        responseView.baseTextColor()
+//        responseView.translatesAutoresizingMaskIntoConstraints = false
+//
+//
+//        NSLayoutConstraint.activate([
+//
+//            responseView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            responseView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+//            responseView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+//            responseView.heightAnchor.constraint(equalTo: view.safeHeightAnchor, multiplier: 0.5),
+//        ])
     }
     
     
@@ -115,11 +118,11 @@ final class ChatViewController: UIViewController {
                     
                     
                     chatResponse = chatGptResponse.choices.first?.message.content ?? "no message"
-                    responseView.text = chatResponse
+                    
                     
                     
                     var checker = 0
-                    for i in chatResponse.components(separatedBy: "\n"){
+                    for i in chatResponse.components(separatedBy: ["\n", ":"]){
                         
                         if i.contains("やるべき事"){
                             
@@ -139,7 +142,7 @@ final class ChatViewController: UIViewController {
                         }
                         
                         let del: Set<Character> = [" ", "-"] // 削除する文字を指定
-                         
+                        
                         // 文字列から "c" を削除
                         var l = i
                         l.removeAll(where: { del.contains($0)})
@@ -168,15 +171,15 @@ final class ChatViewController: UIViewController {
                     }
                     
                     
-                    let saveData: Record = Record(whatToBe: targetValue, declaredAt: Date(), period_Y: targetYear, period_M: targetMonth, response: response)
+                    let saveData: Record = Record(whatToBe: targetValue, declaredAt: Date(), period_Y: targetYear, period_M: targetMonth, response: response)//, imageURL: apiImgURL)
                     
                     
                     do {
-
+                        
                         try chatData().putData(request: saveData)
                     }
                     catch{
-
+                        
                         print(error)
                     }
                     
@@ -189,22 +192,108 @@ final class ChatViewController: UIViewController {
                     
                     waitForResponse = false
                 }
+                
+                
+                let vc = DetailRecordView()
+                vc.record.whatToBe = targetValue
+                vc.record.declaredAt =  Date()
+                vc.record.period_Y = targetYear
+                vc.record.period_M = targetMonth
+                vc.record.response.todo = response.todo
+                vc.record.response.detail = response.detail
+                vc.record.response.map = response.map
+                
+                
+                let nvc = UINavigationController(rootViewController: vc)
+                nvc.modalPresentationStyle = .fullScreen
+                
+                
+                self.present(nvc, animated: true)
             }
         }
     }
+    
+    
+    func postRequest(user_text: String, user_id: String){
+        let url = URL(string: "https://7e6e-34-91-50-188.ngrok.io/geek/")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        // リクエストボディを作成
+        let json: [String: Any] = [
+            "user_id" : user_id,
+            "user_text" : user_text
+        ]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: json)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+            guard let data = data else {
+                print("No data received")
+                return
+            }
+            // Received data is your JPEG image data
+            if let image = UIImage(data: data) {
+                // Handle the received image
+                // For example, you can display it in an UIImageView
+                DispatchQueue.main.async {
+                    
+                    apiImg = image
+                }
+            }
+        }
+        
+        task.resume()
+    }
 }
 
-
+import Firebase
+import FirebaseStorage
 
 extension ChatViewController{
+    
+    
+//    func creatrImage() {
+//        
+//        let storageRef = Storage.storage().reference().child("UserImages").child(Authed_User().auth)
+//        
+//        if let imageData = apiImg.jpegData(compressionQuality: 0.8){
+//            
+//            // メタデータを設定
+//            let metadata = StorageMetadata()
+//            metadata.contentType = "image/jpeg"
+//            
+//            storageRef.putData(imageData, metadata: metadata, completion:{(metadata, error) in
+//                
+//                if let _ = metadata {
+//                    
+//                    // ②storageへの保存が成功した場合はdownloadURLの取得を行う
+//                    storageRef.downloadURL { (url, error) in
+//                        
+//                        if let downloadUrl = url {
+//                            
+//                            self.apiImgURL = downloadUrl.absoluteString
+//                        }
+//                    }
+//                }
+//                else {print("// DescのdownloadURLの取得が失敗した場合の処理")}
+//            })
+//        }else {print("// Descのstorageの保存が失敗した場合の処理")}
+//    }
+    
+    
     
     //private func task1() async -> String {
     func request() async throws -> ChatGPTResponse{
         
+        self.postRequest(user_text: targetValue, user_id: Authed_User().auth)
+        
         var requestBody:Data?{
             
-            let message = ChatGPTMassage(role: "assistant", content: "以下のテキストに対して、物知りの占い師が22歳の人にアドバイスする様に答えて下さい。まず、やるべき事を出力し、それぞれについて具体的なアドバイスをして下さい。最後に具体的なロードマップを作成して下さい。但し、具体的なアドバイスは箇条書きでお願いします。\n\n希望する形式：\nやるべき事：\n具体的なアドバイス:\nロードマップ：\n\nテキスト：\(targetYear)年\(targetMonth)ヶ月で\(targetValue)になりたい。")
-
+            let message = ChatGPTMassage(role: "system", content: "以下のテキストに対して、物知りの占い師が22歳の人にアドバイスする様に答えて下さい。まず、やるべき事を出力し、それぞれについて具体的なアドバイスをして下さい。最後に具体的なロードマップを作成して下さい。但し、具体的なアドバイスは箇条書きでお願いします。\n\n希望する形式：\nやるべき事：\n具体的なアドバイス:\nロードマップ：\n\nテキスト：\(targetYear)年\(targetMonth)ヶ月で\(targetValue)になりたい。")
+            
             
             chatRecord.append(message)
             
@@ -329,6 +418,7 @@ struct Record: Identifiable, Codable{
     var period_Y: Int
     var period_M: Int
     var response: Response
+    //var imageURL: String
     
     
     enum CodingKyes: String, CodingKey{
@@ -345,7 +435,7 @@ struct Response: Codable{
     var todo : [String]
     var detail : [String]
     var map : [String]
-
+    
     
     enum CodingKeys: String, CodingKey {
         case todo = "やるべき事"

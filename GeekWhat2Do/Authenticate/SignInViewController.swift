@@ -26,6 +26,14 @@ class SignInViewController: ViewWithAnimationViewController {
         contentView.layer.cornerRadius = 10
         contentView.clipsToBounds = true
         contentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        let iv = UIImageView()
+        view.addSubview(iv)
+        iv.image = UIImage(named: "user")
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.clipsToBounds = true
+        iv.layer.cornerRadius = 15
 
 
         contentView.addSubview(viewWithAlpha)
@@ -97,8 +105,15 @@ class SignInViewController: ViewWithAnimationViewController {
 
 
         NSLayoutConstraint.activate([
+            
+            
+            iv.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 50),
+            iv.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            iv.widthAnchor.constraint(equalToConstant: 75),
+            iv.heightAnchor.constraint(equalToConstant: 75),
+            
 
-            contentView.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 75),
+            contentView.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 150),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             contentView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.27),

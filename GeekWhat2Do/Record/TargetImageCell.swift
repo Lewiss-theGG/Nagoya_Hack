@@ -31,7 +31,6 @@ class TargetImageCell: UITableViewCell {
         contentView.addSubview(targetImageView)
         targetImageView.translatesAutoresizingMaskIntoConstraints = false
         targetImageView.contentMode = .scaleAspectFit
-        targetImageView.image = #imageLiteral(resourceName: "progressMan")
         
         
         NSLayoutConstraint.activate([

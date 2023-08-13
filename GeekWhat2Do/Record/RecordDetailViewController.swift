@@ -16,7 +16,7 @@ class DetailRecordView: UIViewController{
     let table = UITableView()
     
     
-    var record = Record(id: String(), whatToBe: String(), declaredAt: Date(), period_Y: Int(), period_M: Int(), response: Response(todo: [], detail: [], map: []))
+    var record = Record(id: String(), whatToBe: String(), declaredAt: Date(), period_Y: Int(), period_M: Int(), response: Response(todo: [], detail: [], map: []))//, imageURL: String())
         
     
     override func viewDidLoad() {
@@ -71,9 +71,11 @@ extension DetailRecordView: UITableViewDelegate, UITableViewDataSource{
         if indexPath.row == 0{
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "TargetImageCell", for: indexPath) as! TargetImageCell
+            
             cell.cellSetView()
             
-            cell.imageView?.image = UIImage()
+            cell.targetImageView.image = apiImg
+            
             cell.imageView?.baseColor(backgroundColor: .link)
             
             return cell

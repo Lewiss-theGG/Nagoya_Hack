@@ -19,7 +19,7 @@
 		E12FA9F72A7A5A1900F8CD43 /* RecordDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9F62A7A5A1900F8CD43 /* RecordDetailViewController.swift */; };
 		E12FA9F92A7C96C900F8CD43 /* Firebase_Struct.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9F82A7C96C900F8CD43 /* Firebase_Struct.swift */; };
 		E12FA9FB2A7EEED000F8CD43 /* TargetImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12FA9FA2A7EEED000F8CD43 /* TargetImageCell.swift */; };
-		E12FA9FF2A7F5DEB00F8CD43 /* backvid.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E12FA9FE2A7F5DEA00F8CD43 /* backvid.mp4 */; };
+		E12FAA012A7F734200F8CD43 /* backvid.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E12FAA002A7F734200F8CD43 /* backvid.mp4 */; };
 		E1593E682A70D62500B2B915 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1593E672A70D62500B2B915 /* ChatViewController.swift */; };
 		E1C7D7E72A6D1D0100E901A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */; };
 		E1C7D7E92A6D1D0100E901A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7E82A6D1D0100E901A0 /* SceneDelegate.swift */; };
@@ -67,7 +67,7 @@
 		E12FA9F62A7A5A1900F8CD43 /* RecordDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDetailViewController.swift; sourceTree = "<group>"; };
 		E12FA9F82A7C96C900F8CD43 /* Firebase_Struct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase_Struct.swift; sourceTree = "<group>"; };
 		E12FA9FA2A7EEED000F8CD43 /* TargetImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetImageCell.swift; sourceTree = "<group>"; };
-		E12FA9FE2A7F5DEA00F8CD43 /* backvid.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = backvid.mp4; sourceTree = "<group>"; };
+		E12FAA002A7F734200F8CD43 /* backvid.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = backvid.mp4; sourceTree = "<group>"; };
 		E1593E672A70D62500B2B915 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		E1C7D7E32A6D1D0100E901A0 /* GeekWhat2Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeekWhat2Do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -217,8 +217,8 @@
 				E1C7D8162A6D444900E901A0 /* Rules.swift */,
 				E12FA9D92A74EB3B00F8CD43 /* chatDecode.swift */,
 				E1C7D7EA2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift */,
+				E12FAA002A7F734200F8CD43 /* backvid.mp4 */,
 				E1C7D7EF2A6D1D0500E901A0 /* Assets.xcassets */,
-				E12FA9FE2A7F5DEA00F8CD43 /* backvid.mp4 */,
 				E12FA9E62A765DDA00F8CD43 /* Fonts */,
 				E1C7D7F12A6D1D0500E901A0 /* LaunchScreen.storyboard */,
 				E1C7D7F42A6D1D0500E901A0 /* Info.plist */,
@@ -356,7 +356,7 @@
 				E1C7D7F32A6D1D0500E901A0 /* LaunchScreen.storyboard in Resources */,
 				E12FA9E82A765DF700F8CD43 /* APJapanesefont.ttf in Resources */,
 				E1C7D7F02A6D1D0500E901A0 /* Assets.xcassets in Resources */,
-				E12FA9FF2A7F5DEB00F8CD43 /* backvid.mp4 in Resources */,
+				E12FAA012A7F734200F8CD43 /* backvid.mp4 in Resources */,
 				E1C7D8572A6D58CF00E901A0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

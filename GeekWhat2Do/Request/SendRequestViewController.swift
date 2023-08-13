@@ -11,7 +11,7 @@ import KMPlaceholderTextView
 
 
 
-var apiImg = UIImage()
+var apiImg = UIImage(named: "cock")
 
 
 class SendRequestViewController: UIViewController {
