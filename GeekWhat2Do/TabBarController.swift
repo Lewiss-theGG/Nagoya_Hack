@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 
 
 class TabBarController: UITabBarController{
@@ -20,27 +18,27 @@ class TabBarController: UITabBarController{
         super.viewDidLoad()
         
         
-        let ChatVC = SendRequestViewController()
-        ChatVC.tabBarItem = .init(title: "相談部屋",
+        let userVC = UserViewController()
+        userVC.tabBarItem = .init(title: "My Page",
                                   image: UIImage(systemName: "sun.and.horizon")?.withRenderingMode(.alwaysTemplate),
                                   selectedImage: UIImage(systemName: "sun.and.horizon.fill")?.withRenderingMode(.alwaysTemplate))
-        ChatVC.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+        userVC.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
         
         
-        let nv_ChatVC = UINavigationController(rootViewController: ChatVC)
-        vcList.append(nv_ChatVC)
+        let nv_userVC = UINavigationController(rootViewController: userVC)
+        vcList.append(nv_userVC)
         
         
         
-        let RecordVC = RecordViewController()
-        RecordVC.tabBarItem = .init(title: "目標一覧",
-                                    image: UIImage(systemName:"book")?.withRenderingMode(.alwaysTemplate),
-                                    selectedImage: UIImage(systemName: "book.fill")?.withRenderingMode(.alwaysTemplate))
-        RecordVC.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
-        
-        
-        let nv_RecordVC = UINavigationController(rootViewController: RecordVC)
-        vcList.append(nv_RecordVC)
+//        let RecordVC = RecordViewController()
+//        RecordVC.tabBarItem = .init(title: "目標一覧",
+//                                    image: UIImage(systemName:"book")?.withRenderingMode(.alwaysTemplate),
+//                                    selectedImage: UIImage(systemName: "book.fill")?.withRenderingMode(.alwaysTemplate))
+//        RecordVC.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+//        
+//        
+//        let nv_RecordVC = UINavigationController(rootViewController: RecordVC)
+//        vcList.append(nv_RecordVC)
         
         
         self.tabBar.tintColor = .label
@@ -48,3 +46,4 @@ class TabBarController: UITabBarController{
         self.selectedIndex = 0
     }
 }
+

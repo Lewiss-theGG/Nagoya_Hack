@@ -553,3 +553,24 @@ extension UIAlertController {
         self.view.tintColor = color
     }
 }
+
+
+class GradationView: UIView {
+    
+    override class var layerClass: AnyClass {
+        
+        return CAGradientLayer.self
+    }
+    
+    
+    func setGradation(gradientStartColor: UIColor, ednpoint: CGFloat = 0) {//, gradientEndColor: UIColor
+        
+        guard let gradientLayer = self.layer as? CAGradientLayer else {
+            return
+        }
+        gradientLayer.endPoint = .init(x: ednpoint, y: 0.9)
+        gradientLayer.startPoint = .init(x: 0.9, y: 0)
+        gradientLayer.colors = [gradientStartColor.withAlphaComponent(0.3).cgColor, UIColor.systemBackground.cgColor]
+        //, gradientEndColor.withAlphaComponent(0.3).cgColor]
+    }
+}

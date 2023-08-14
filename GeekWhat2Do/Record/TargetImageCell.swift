@@ -97,47 +97,6 @@ class TargetLabelCell: UITableViewCell {
 }
 
 
-
-class TargetTextCell: UITableViewCell {
-    
-    let textView = UITextView()
-    
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
-    
-    func cellSetView(){
-        
-        contentView.backgroundColor = .label
-        
-        
-        contentView.addSubview(textView)
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.baseFont()
-        textView.baseTextColor()
-        textView.isScrollEnabled = false
-        
-        
-        NSLayoutConstraint.activate([
-            
-            textView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            textView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            textView.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -6),
-            textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-        ])
-    }
-}
-
-
 class TargetHeaderCell: UITableViewCell {
     
     let label = UILabel()
@@ -175,6 +134,102 @@ class TargetHeaderCell: UITableViewCell {
             label.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10),
             label.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
             label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+        ])
+    }
+}
+
+
+class TargetTextCell: UITableViewCell {
+    
+    let textView = UITextView()
+    
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+
+    
+    func cellSetView(){
+        
+        contentView.backgroundColor = .systemBackground
+        
+        
+        contentView.addSubview(textView)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.baseFont()
+        textView.baseTextColor()
+        textView.isScrollEnabled = false
+        
+        
+        NSLayoutConstraint.activate([
+            
+            textView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            textView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            textView.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -10),
+            textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        ])
+    }
+}
+
+
+class attendTitleValueCell: UITableViewCell {
+    
+    let titleLabel = UILabel()
+    
+    
+    let valueLabel = UILabel()
+    
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+
+    
+    func cellSetView(titleFont: UIFont, titleTextColor: UIColor,
+                     valueFont: UIFont, valueTextColor: UIColor){
+        
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(valueLabel)
+        
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.font = titleFont
+        titleLabel.textColor = titleTextColor
+        titleLabel.textAlignment = .left
+        
+        
+        valueLabel.translatesAutoresizingMaskIntoConstraints = false
+        valueLabel.font = valueFont
+        valueLabel.textColor = valueTextColor
+        valueLabel.textAlignment = .right
+        
+        
+        NSLayoutConstraint.activate([
+            
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            titleLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.7, constant: -5),
+            
+            
+            valueLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            valueLabel.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: 5),
+            valueLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            valueLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
         ])
     }
 }
