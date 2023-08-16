@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseFirestoreSwift
+import Firebase
 
 class ProductDisplayViewController: UIViewController {
     
@@ -157,7 +159,6 @@ class ProductDetailViewController: UIViewController{
     
     
     let applyButton = UIButton()
-    
     
     override func viewDidLoad() {
         

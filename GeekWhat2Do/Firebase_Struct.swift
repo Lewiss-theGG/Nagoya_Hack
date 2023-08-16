@@ -18,8 +18,30 @@ struct Authed_User{
 
 struct Database{
     
+    //Duped
     let user = Firestore.firestore().collection("Users").document(Authed_User().auth)
     
     
     let records = Firestore.firestore().collection("Users").document(Authed_User().auth).collection("Records")
+    
+    
+    
+    
+    
+    let users = Firestore.firestore().collection("User").document(Authed_User().auth)
+    
+    
+    let uAttendance = Firestore.firestore().collection("User").document(Authed_User().auth).collection("Attendance")
+    
+    
+    let uRequest = Firestore.firestore().collection("User").document(Authed_User().auth).collection("Request")
+    
+    
+    let event = Firestore.firestore().collection("Event")//.document(Authed_User().auth)
+    
+    
+    let product = Firestore.firestore().collection("Product")
+    
+    
+    let munic = Firestore.firestore().collection("Munic")
 }

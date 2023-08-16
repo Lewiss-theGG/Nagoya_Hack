@@ -41,14 +41,33 @@ class AttendDisplayViewController: UIViewController {
                "関市",]
     
     
+    @Published var attendance = [uAttendance]()
+    
+    
+    @Published var product: uProduct = uProduct(id: String(),
+                                                productFrom: String(),
+                                                productID: String(),
+                                                productImageURL: String(),
+                                                productName: String(),
+                                                productRequestState: String(),
+                                                productRequested: Int(),
+                                                productRequestedAt: Date(),
+                                                productUnitPrice: Int())
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.title = "特産品一覧"
+        self.title = "イベント一覧"
         
         
         self.setLeft(leftBarTitle: "<")
         self.setView()
+        
+        let globalQ = DispatchQueue.global()
+        globalQ.sync {
+            
+            self.getAttendance()
+        }
     }
     
     
@@ -76,6 +95,28 @@ class AttendDisplayViewController: UIViewController {
             displayTable.widthAnchor.constraint(equalTo: view.widthAnchor),
         ])
     }
+    
+    
+    final func getAttendance(){
+
+        Database().uAttendance.getDocuments(completion: { querySnapshot, error in
+
+            if let error = error{
+
+                print(error.localizedDescription)
+                return
+            }
+            else{
+                
+                self.attendance = querySnapshot!.documents.compactMap { (querySnapshot) -> uAttendance? in
+
+                    return try? querySnapshot.data(as: uAttendance.self)
+                }
+
+                self.displayTable.reloadData()
+            }
+        }
+    )}
 }
 
 
@@ -83,7 +124,7 @@ extension AttendDisplayViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return ats.count
+        return attendance.count
     }
     
     
@@ -99,12 +140,15 @@ extension AttendDisplayViewController: UITableViewDelegate, UITableViewDataSourc
         cell.cellSetView()
         
         
+        let data = attendance[indexPath.row]
+        
+        
         let formatter = DateFormatter()
         formatter.dateFormat = "yy年MM月dd日"
-        cell.dateLabel.text = "\(formatter.string(from: Date()))"
-        cell.atLabel.text = "\(ats[indexPath.row])"
-        cell.rewardLabel.text = "\(5*(indexPath.row%3 + 1)) TMI　獲得"
-        cell.titleLabel.text = "\(ats[indexPath.row]) GOMI 祭り"
+        cell.dateLabel.text = "\(formatter.string(from: data.eventDate))"
+        cell.atLabel.text = "\(data.eventAt)"
+        cell.rewardLabel.text = "\(data.eventReward) TMI　獲得"
+        cell.titleLabel.text = "\(data.eventName)"
         
         return cell
     }
@@ -123,10 +167,5 @@ extension AttendDisplayViewController: UITableViewDelegate, UITableViewDataSourc
         let nvc = UINavigationController(rootViewController: vc)
         nvc.modalPresentationStyle = .fullScreen
         present(nvc, animated: false)
-        
-        vc.title = "\(ats[indexPath.row]) GOMI 祭り"
-        vc.titleValue = "\(ats[indexPath.row]) GOMI 祭り"
-        vc.rewardValue = "\(5*(indexPath.row%3 + 1)) TMI　獲得"
-        vc.atValue = "\(ats[indexPath.row])"
     }
 }

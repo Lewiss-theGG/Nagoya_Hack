@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestoreSwift
+
 
 class UserViewController: UIViewController {
     
@@ -52,6 +55,13 @@ class UserViewController: UIViewController {
     let attendOverlay = UIButton()
     
     
+    @Published var user: User = User(userAttendance: Int(),
+                                     userToken: Int(),
+                                     userMail: String(),
+                                     userName: String(),
+                                     userID: String())
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -59,6 +69,95 @@ class UserViewController: UIViewController {
         
         
         self.setView()
+        
+        //        do {
+        //
+        //            let path = UUID().uuidString
+        //
+        //            try putAttedndance(attendance: uAttendance(eventAt: "名古屋市",
+        //                                                       eventDate: Date(),
+        //                                                       eventID: path,
+        //                                                       eventName: "名古屋市ごみ祭り",
+        //                                                       eventReward: 5),  path: path)
+        //
+        //
+        //            try putProduct(product: uProduct(productFrom: "名古屋市",
+        //                                             productID: path,
+        //                                             productImageURL: String(),
+        //                                             productName: "Uiro",
+        //                                             productRequestState: "done",
+        //                                             productRequested: 2,
+        //                                             productRequestedAt: Date(),
+        //                                             productUnitPrice: 50),  path: path)
+        //
+        //
+        //
+        //        } catch {
+        //
+        //            print("An error occurred: \(error)")
+        //        }
+        
+        
+        
+        let globalQ = DispatchQueue.global()
+        globalQ.sync {
+            
+            getUser()
+        }
+    }
+    
+    
+    
+    final func getUser(){
+        
+        Database().users.getDocument { document, error in
+            
+            if let error = error{
+                
+                print(error.localizedDescription)
+                return
+            }
+            
+            if let document = document, document.exists {
+                
+                do {
+                    
+                    try self.user =  document.data(as: User.self)
+                    
+                    self.setView()
+                    
+                } catch {
+                    print("Error decoding document: \(error)")
+                }
+                
+            }
+        }
+    }
+    
+    
+    final func putAttedndance(attendance: uAttendance, path: String) throws {
+        
+        do {
+            
+            try Database().uAttendance.document(path).setData(from: attendance)
+        }
+        catch{
+            
+            print(error)
+        }
+    }
+    
+    
+    final func putProduct(product: uProduct, path: String) throws {
+        
+        do {
+            
+            try Database().uRequest.document(path).setData(from: product)
+        }
+        catch{
+            
+            print(error)
+        }
     }
     
     
@@ -103,9 +202,9 @@ class UserViewController: UIViewController {
         userIcon.translatesAutoresizingMaskIntoConstraints = false
         
         
-        usernameLabel.text = "Eman Resu"
+        usernameLabel.text = user.userName
         usernameLabel.text = usernameLabel.text?.uppercased()
-        usernameLabel.baseFont(font: .monospacedSystemFont(ofSize: 20, weight: .bold))
+        usernameLabel.baseFont(font: .monospacedSystemFont(ofSize: 50, weight: .bold))
         usernameLabel.baseTextColor()
         usernameLabel.baseColor(backgroundColor: .clear)
         usernameLabel.textAlignment = .center
@@ -156,17 +255,18 @@ class UserViewController: UIViewController {
         attendLabel.translatesAutoresizingMaskIntoConstraints = false
         
         
-        holdNumberLabel.text = "90"
+        holdNumberLabel.text = "\(user.userToken)"
         holdNumberLabel.baseTextColor(textColor: .systemBackground)
         holdNumberLabel.baseColor(backgroundColor: .clear)
         holdNumberLabel.baseFont(font: .monospacedSystemFont(ofSize: 100, weight: .bold))
         holdNumberLabel.textAlignment = .center
         holdNumberLabel.numberOfLines = 1
-        holdNumberLabel.minimumScaleFactor = 0.71
+        holdNumberLabel.minimumScaleFactor = 0.4
+        holdNumberLabel.adjustsFontSizeToFitWidth = true
         holdNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         
         
-        attendNumberLabel.text = "24"
+        attendNumberLabel.text = "\(user.userAttendance)"
         attendNumberLabel.baseTextColor(textColor: .systemBackground)
         attendNumberLabel.baseColor(backgroundColor: .clear)
         attendNumberLabel.baseFont(font: .monospacedSystemFont(ofSize: 100, weight: .bold))
@@ -312,3 +412,72 @@ class UserViewController: UIViewController {
         self.present(nvc, animated: false)
     }
 }
+
+
+
+
+
+
+
+struct User: Identifiable, Codable{
+
+    @DocumentID var id: String? = UUID().uuidString
+
+    var userAttendance: Int
+    var userToken: Int
+    var userMail: String
+    var userName: String
+    var userID: String
+}
+
+
+
+
+
+struct uAttendance: Identifiable, Codable{
+
+    @DocumentID var id: String? = UUID().uuidString
+
+
+    var eventAt: String
+    var eventDate: Date
+    var eventID: String
+    var eventName: String
+    var eventReward: Int
+}
+
+
+
+struct uProduct: Identifiable, Codable{
+    
+    @DocumentID var id: String? = UUID().uuidString
+    
+    
+    var productFrom: String
+    var productID: String
+    var productImageURL: String
+    var productName: String
+    var productRequestState: String
+    var productRequested: Int
+    var productRequestedAt: Date
+    var productUnitPrice: Int
+}
+
+//
+//
+//struct Response: Codable{
+//
+//    var todo : [String]
+//    var detail : [String]
+//    var map : [String]
+//
+//
+//    enum CodingKeys: String, CodingKey {
+//        case todo = "やるべき事"
+//        case detail = "具体的なアドバイス"
+//        case map = "ロードマップ"
+//    }
+//}
+
+
+
