@@ -14,6 +14,7 @@ target 'GeekWhat2Do' do
   pod 'KMPlaceholderTextView'
   pod 'FirebaseFirestoreSwift'
   pod 'FirebaseStorage'
+  pod 'metamask-ios-sdk'
 
   # Pods for GeekWhat2Do
 

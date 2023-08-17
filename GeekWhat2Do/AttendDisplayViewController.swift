@@ -169,3 +169,28 @@ extension AttendDisplayViewController: UITableViewDelegate, UITableViewDataSourc
         present(nvc, animated: false)
     }
 }
+
+
+
+
+import UIKit
+import WebKit
+
+class ViewController: UIViewController, WKNavigationDelegate {
+    var webView: WKWebView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        webView = WKWebView(frame: view.bounds)
+        webView.navigationDelegate = self
+        view.addSubview(webView)
+        
+        // Load MetaMask extension URL
+        if let extensionURL = URL(string: "chrome-extension://<extension_id>/popup.html") {
+            let request = URLRequest(url: extensionURL)
+            webView.load(request)
+        }
+    }
+}
+
+
