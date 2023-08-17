@@ -14,6 +14,7 @@ target 'GeekWhat2Do' do
   pod 'KMPlaceholderTextView'
   pod 'FirebaseFirestoreSwift'
   pod 'FirebaseStorage'
+  pod 'web3swift'
 
   # Pods for GeekWhat2Do
 
