@@ -352,3 +352,23 @@ extension ProductDetailViewController: UITextFieldDelegate{
         }
     }
 }
+
+
+
+import web3swift
+import Web3Core
+
+//
+//class CreateAccountViewController: UIViewController {
+//
+//    private let _toTransferSegueIdentifier = "createAccountToTransferSegue"
+//
+//    func createAccountAction(_ sender: Any) {
+//
+//        let configA = EthAccountConfiguration(namespace: "walletA", password: "qwerty")
+//
+//        let (keystoreA, accountA): (GethKeyStore?,GethAccount?) = EthAccountCoordinator.default.launch(configA)
+//    }
+//
+//}
+//
