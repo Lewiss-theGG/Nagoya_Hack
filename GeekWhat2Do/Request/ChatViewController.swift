@@ -12,11 +12,6 @@ import KMPlaceholderTextView
 import AVFoundation
 
 
-let apiKey = "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"
-
-
-let orgId = "org-LhxSkR9pTVukad8pbSLrdN5j"
-
 
 final class ChatViewController: UIViewController {
     
@@ -312,8 +307,8 @@ extension ChatViewController{
         //URLRequestを作成
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
-        urlRequest.allHTTPHeaderFields = ["Authorization" : "Bearer \(apiKey)",
-                                          "OpenAI-Organization": orgId,
+        urlRequest.allHTTPHeaderFields = ["Authorization" : "Bearer \("apiKey")",
+                                          "OpenAI-Organization": "orgId",
                                           "Content-Type" : "application/json"]
         
         
