@@ -15,31 +15,6 @@ class AttendDisplayViewController: UIViewController {
     let displayTable = UITableView()
     
     
-    let ats = ["名古屋市",
-               "安城市",
-               "刈谷市",
-               "生駒市",
-               "湖西市",
-               "浜松市",
-               "奈良市",
-               "岡崎市",
-               "新城市",
-               "岐阜市",
-               "下呂市",
-               "関市",
-               "名古屋市",
-               "安城市",
-               "刈谷市",
-               "生駒市",
-               "湖西市",
-               "浜松市",
-               "奈良市",
-               "岡崎市",
-               "新城市",
-               "岐阜市",
-               "下呂市",
-               "関市",]
-    
     
     @Published var attendance = [uAttendance]()
     
@@ -57,7 +32,7 @@ class AttendDisplayViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.title = "イベント一覧"
+        self.title = "イベント参加履歴"
         
         
         self.setLeft(leftBarTitle: "<")
@@ -147,7 +122,7 @@ extension AttendDisplayViewController: UITableViewDelegate, UITableViewDataSourc
         formatter.dateFormat = "yy年MM月dd日"
         cell.dateLabel.text = "\(formatter.string(from: data.eventDate))"
         cell.atLabel.text = "\(data.eventAt)"
-        cell.rewardLabel.text = "\(data.eventReward) TMI　獲得"
+        cell.rewardLabel.text = "\(data.eventReward) SSC　獲得"
         cell.titleLabel.text = "\(data.eventName)"
         
         return cell
@@ -164,6 +139,9 @@ extension AttendDisplayViewController: UITableViewDelegate, UITableViewDataSourc
         
         
         let vc = AttendDetailViewController()
+        vc._eventID = attendance[indexPath.row].eventID
+        vc.rewardValue = "\(attendance[indexPath.row].eventReward)"
+        
         let nvc = UINavigationController(rootViewController: vc)
         nvc.modalPresentationStyle = .fullScreen
         present(nvc, animated: false)

@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseStorage
 import FirebaseFirestoreSwift
 
 
@@ -55,6 +56,37 @@ class UserViewController: UIViewController {
     let attendOverlay = UIButton()
     
     
+    let evnetType = ["ボランティア","地域清掃","祭り運営"]
+    
+    let ats = ["名古屋市",
+               "安城市",
+               "刈谷市",
+               "生駒市",
+               "湖西市",
+               "浜松市",
+               "奈良市",
+               "岡崎市",
+               "新城市",
+               "名古屋市",
+               "下呂市",
+               "関市",
+               "名古屋市",
+               "安城市",
+               "刈谷市",
+               "生駒市",
+               "湖西市",
+               "浜松市",
+               "奈良市",
+               "岡崎市",
+               "新城市",
+               "岐阜市",
+               "下呂市",
+               "関市",]
+    
+    
+    let product_name_list = ["りんご", "みかん", "桃", "ブドウ", "筆", "扇子", "ゴルフクラブ"]
+    
+    
     @Published var user: User = User(userAttendance: Int(),
                                      userToken: Int(),
                                      userMail: String(),
@@ -67,35 +99,80 @@ class UserViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         
+        let eventReward = Int.random(in: 1..<ats.count)
+        
+        let evnetTypeCount = Int.random(in: 0..<evnetType.count)
+        
+        let product_name_ = Int.random(in: 0..<product_name_list.count)
+        
+        
+        title = "ホーム"
         
         self.setView()
         
-        //        do {
-        //
-        //            let path = UUID().uuidString
-        //
-        //            try putAttedndance(attendance: uAttendance(eventAt: "名古屋市",
-        //                                                       eventDate: Date(),
-        //                                                       eventID: path,
-        //                                                       eventName: "名古屋市ごみ祭り",
-        //                                                       eventReward: 5),  path: path)
-        //
-        //
-        //            try putProduct(product: uProduct(productFrom: "名古屋市",
-        //                                             productID: path,
-        //                                             productImageURL: String(),
-        //                                             productName: "Uiro",
-        //                                             productRequestState: "done",
-        //                                             productRequested: 2,
-        //                                             productRequestedAt: Date(),
-        //                                             productUnitPrice: 50),  path: path)
-        //
-        //
-        //
-        //        } catch {
-        //
-        //            print("An error occurred: \(error)")
-        //        }
+                do {
+                    
+                    
+                    
+                    let path = UUID().uuidString
+                    let productPath = UUID().uuidString
+                    
+                    let txt = "年\(Int.random(in: 1...6))回、\(ats[eventReward])の\(evnetType[evnetTypeCount])を行っています。今回の\(evnetType[evnetTypeCount])では、同地区内の沿道にて散乱ゴミ及び落葉の収集・清掃を行い、特に小・中学生及び\(Int.random(in: 2...5)*10)代の方に多くご参加いただきました。多くの人がイベントに参加することにより、地域の結束力を高める事が出来ます。"
+                    
+                    
+                    let attendance = Int.random(in: 10...100)
+                    
+                    
+                    try putAttendance(attendance: uAttendance(eventAt: ats[eventReward],
+                                                              eventDate: Date(),
+                                                              eventID: path,
+                                                              eventName: "\(ats[eventReward])\(evnetType[evnetTypeCount])",
+                                                              eventReward: eventReward),  path: path)
+                    
+                    
+                    try putEvent(event: Event(eventAt: ats[eventReward],
+                                              eventAttendance: attendance,
+                                              eventCount: 3,
+                                              eventDetail: txt,
+                                              eventDistributed: attendance * eventReward,
+                                              eventDate: Date(),
+                                              eventID: path,
+                                              eventName: "\(ats[eventReward])\(evnetType[evnetTypeCount])"),  path: path)
+                    
+                    
+                    
+                    
+                    let productName = String()
+                    
+                    try putProduct(product: Product(productFrom: ats[eventReward],
+                                                    productID: productPath,
+                                                    productImageURL: String(),
+                                                    productName: product_name_list[product_name_],
+                                                    productUnitPrice: Int.random(in: 15...100)), path: productPath)
+        
+                    
+                    let globalQ = DispatchQueue.global()
+                    globalQ.sync {
+                        
+                        saveProductData(path: productPath, name: product_name_list[product_name_])
+                    }
+                    
+        
+//                    try putProduct(product: uProduct(productFrom: "名古屋市",
+//                                                     productID: path,
+//                                                     productImageURL: String(),
+//                                                     productName: "Uiro",
+//                                                     productRequestState: "done",
+//                                                     productRequested: 2,
+//                                                     productRequestedAt: Date(),
+//                                                     productUnitPrice: 50),  path: path)
+        
+        
+        
+                } catch {
+        
+                    print("An error occurred: \(error)")
+                }
         
         
         
@@ -105,6 +182,57 @@ class UserViewController: UIViewController {
             getUser()
         }
     }
+    
+    let storage = Storage.storage()
+    
+    func saveProductData(path: String, name: String){
+        
+        // Get a reference to the storage service
+        let storageRef = storage.reference(withPath: "Product").child(path)
+        
+        // Your UIImage
+        guard let image = UIImage(named: name) else {
+            return
+        }
+        
+        // Convert UIImage to Data
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            return
+        }
+        
+        
+        // Upload the image to Firebase Storage
+        storageRef.putData(imageData, metadata: nil) { metadata, error in
+            if let error = error {
+                print("Error uploading image: \(error)")
+            } else {
+                // Get the download URL
+                storageRef.downloadURL { url, error in
+                    if let error = error {
+                        print("Error getting download URL: \(error)")
+                    } else if let downloadURL = url {
+                        // Save the download URL to Firestore
+                        self.saveImageUrlToFirestore(downloadURL, path)
+                    }
+                }
+            }
+        }
+    }
+    
+    func saveImageUrlToFirestore(_ imageUrl: URL, _ path: String) {
+        
+            // Replace with your Firestore document reference
+        let documentRef = Database().product.document(path)
+
+            // Update the document with the image URL
+            documentRef.updateData(["productImageURL": imageUrl.absoluteString]) { error in
+                if let error = error {
+                    print("Error updating document: \(error)")
+                } else {
+                    print("Image URL saved to Firestore")
+                }
+            }
+        }
     
     
     
@@ -135,7 +263,10 @@ class UserViewController: UIViewController {
     }
     
     
-    final func putAttedndance(attendance: uAttendance, path: String) throws {
+    
+    
+    //uAttendance //
+    final func putAttendance(attendance: uAttendance, path: String) throws {
         
         do {
             
@@ -148,7 +279,9 @@ class UserViewController: UIViewController {
     }
     
     
-    final func putProduct(product: uProduct, path: String) throws {
+    
+    //uProduct // 
+    final func putuProduct(product: uProduct, path: String) throws {
         
         do {
             
@@ -159,6 +292,69 @@ class UserViewController: UIViewController {
             print(error)
         }
     }
+    
+   
+    
+    
+    //Event
+    final func putEvent(event: Event, path: String) throws {
+        
+        do {
+            
+            try Database().event.document(path).setData(from: event)
+        }
+        catch{
+            
+            print(error)
+        }
+    }
+    
+    
+    
+    //eAttended
+    final func puteAttended(eAttended: eAttended, path: String) throws {
+        
+        do {
+            
+            try Database().event.document(path).setData(from: eAttended)
+        }
+        catch{
+            
+            print(error)
+        }
+    }
+    
+    
+    
+    
+    //Product
+    final func putProduct(product: Product, path: String) throws {
+        
+        do {
+            
+            try Database().product.document(path).setData(from: product)
+        }
+        catch{
+            
+            print(error)
+        }
+    }
+    
+    
+    
+    //pRequest
+    final func putAttednded(pRequest: pRequest, path: String) throws {
+        
+        do {
+            
+            try Database().product.document(path).setData(from: pRequest)
+        }
+        catch{
+            
+            print(error)
+        }
+    }
+    
     
     
     override func viewDidLayoutSubviews() {
@@ -274,7 +470,7 @@ class UserViewController: UIViewController {
         attendNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         
         
-        holdBottomLabel.text = "TMI"
+        holdBottomLabel.text = "SSC"
         holdBottomLabel.baseFont(font: .monospacedSystemFont(ofSize: 30, weight: .semibold))
         holdBottomLabel.baseTextColor(textColor: .systemBackground)
         holdBottomLabel.baseColor(backgroundColor: .clear)
@@ -398,6 +594,7 @@ class UserViewController: UIViewController {
     @objc func holdPresent(){
         
         let vc = ProductDisplayViewController()
+        userHold = user.userToken
         let nvc = UINavigationController(rootViewController: vc)
         nvc.modalPresentationStyle = .fullScreen
         self.present(nvc, animated: false)
@@ -415,10 +612,6 @@ class UserViewController: UIViewController {
 
 
 
-
-
-
-
 struct User: Identifiable, Codable{
 
     @DocumentID var id: String? = UUID().uuidString
@@ -429,7 +622,6 @@ struct User: Identifiable, Codable{
     var userName: String
     var userID: String
 }
-
 
 
 
@@ -448,6 +640,7 @@ struct uAttendance: Identifiable, Codable{
 
 
 
+
 struct uProduct: Identifiable, Codable{
     
     @DocumentID var id: String? = UUID().uuidString
@@ -462,6 +655,68 @@ struct uProduct: Identifiable, Codable{
     var productRequestedAt: Date
     var productUnitPrice: Int
 }
+
+
+
+
+struct Event: Identifiable, Codable{
+
+    @DocumentID var id: String? = UUID().uuidString
+
+
+    var eventAt: String
+    var eventAttendance: Int
+    var eventCount: Int
+    var eventDetail: String
+    var eventDistributed: Int
+    var eventDate: Date
+    var eventID: String
+    var eventName: String
+}
+
+
+
+
+struct eAttended: Identifiable, Codable{
+
+    @DocumentID var id: String? = UUID().uuidString
+
+    var userID: String
+}
+
+
+
+
+struct Product: Identifiable, Codable{
+    
+    @DocumentID var id: String? = UUID().uuidString
+    
+    var productFrom: String
+    var productID: String
+    var productImageURL: String
+    var productName: String
+    var productUnitPrice: Int
+}
+
+
+
+
+struct pRequest: Identifiable, Codable{
+    
+    @DocumentID var id: String? = UUID().uuidString
+    
+    var requestAt: Date
+    var requestState: String
+    var requested: Int
+    var userID: String
+}
+
+
+
+
+
+
+
 
 //
 //

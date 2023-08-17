@@ -9,6 +9,9 @@ import UIKit
 import FirebaseFirestoreSwift
 import Firebase
 
+
+var userHold = 0
+
 class ProductDisplayViewController: UIViewController {
     
     let baseview = GradationView()
@@ -17,18 +20,20 @@ class ProductDisplayViewController: UIViewController {
     let displayTable = UITableView()
     
     
-    let imgs: [UIImage?] = [UIImage(named: "apple"),
-                            UIImage(named: "orange"),
-                            UIImage(named: "peach"),
-                            UIImage(named: "apple"),
-                            UIImage(named: "orange"),
-                            UIImage(named: "peach"),]
+    let imgs: [UIImage?] = [UIImage(named: "りんご"),
+                            UIImage(named: "みかん"),
+                            UIImage(named: "桃"),
+                            UIImage(named: "ブドウ"),
+                            UIImage(named: "筆"),
+                            UIImage(named: "扇子"),
+                            UIImage(named: "ゴルフクラブ"),]
     
     
-    let name = ["Apple", "みかん", "Peach", "リンゴ", "Orange", "桃"]
+    let name = ["りんご", "みかん", "桃", "ブドウ", "筆", "扇子", "ゴルフクラブ"]
     
     
     let ats = ["名古屋市",
+               "安城市",
                "安城市",
                "奈良市",
                "生駒市",
@@ -36,10 +41,14 @@ class ProductDisplayViewController: UIViewController {
                "浜松市"]
     
     
+    let price_list = [Int.random(in: 15...90), Int.random(in: 15...90), Int.random(in: 15...90), Int.random(in: 15...90),
+                      Int.random(in: 15...90), Int.random(in: 15...90), Int.random(in: 15...90), ]
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.title = "参加イベント一覧"
+        self.title = "返礼品一覧"
         
         
         self.setLeft(leftBarTitle: "<")
@@ -95,7 +104,7 @@ extension ProductDisplayViewController: UITableViewDelegate, UITableViewDataSour
         
         
         cell.atLabel.text = "\(ats[indexPath.row])"
-        cell.priceLabel.text = "🔆 90 TMI"
+        cell.priceLabel.text = "🔆 \(price_list[indexPath.row]) SSC"
         cell.productImage.image = imgs[indexPath.row]
         cell.productName.text = "\(name[indexPath.row])"
         
@@ -118,9 +127,11 @@ extension ProductDisplayViewController: UITableViewDelegate, UITableViewDataSour
         present(nvc, animated: false)
         
         vc.atLabel.text = "\(ats[indexPath.row])"
-        vc.priceLabel.text = "🔆 90 TMI"
+        vc.priceLabel.text = "🔆 \(price_list[indexPath.row]) SSC"
         vc.productImage.image = imgs[indexPath.row]
         vc.productName.text = "\(name[indexPath.row])"
+        vc.holdValue = userHold
+        vc.unitPrice = price_list[indexPath.row]
     }
 }
 
@@ -144,18 +155,18 @@ class ProductDetailViewController: UIViewController{
     
     
     let unitLabel = UILabel()
-    var unitPrice:Float = 15
+    var unitPrice:Int = 15
     
     
     let quantityField = UITextField()
-    var quantity:Float = 0
+    var quantity:Int = 0
     
     
     let totalLabel = UILabel()
     
     
     let holdLabel = UILabel()
-    let holdValue:Float = 90
+    var holdValue:Int = 90
     
     
     let applyButton = UIButton()
@@ -228,7 +239,7 @@ class ProductDetailViewController: UIViewController{
         unitLabel.baseColor(backgroundColor: .clear)
         unitLabel.textAlignment = .right
         unitLabel.translatesAutoresizingMaskIntoConstraints = false
-        unitLabel.text = "購入量：\(unitPrice)TMI x"
+        unitLabel.text = "購入量：\(unitPrice)SSC x"
         
         
         quantityField.baseFont()
@@ -248,7 +259,7 @@ class ProductDetailViewController: UIViewController{
         totalLabel.baseColor(backgroundColor: .label, opacity: 0.05)
         totalLabel.textAlignment = .center
         totalLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalLabel.text = "合計：\(quantity * unitPrice) TMI"
+        totalLabel.text = "合計：\(quantity * unitPrice) SSC"
         
         
         holdLabel.baseFont(font: .monospacedSystemFont(ofSize: 18, weight: .semibold))
@@ -258,7 +269,7 @@ class ProductDetailViewController: UIViewController{
         holdLabel.baseColor(backgroundColor: .label, opacity: 0.05)
         holdLabel.textAlignment = .center
         holdLabel.translatesAutoresizingMaskIntoConstraints = false
-        holdLabel.text = "保有量：\(holdValue) TMI"
+        holdLabel.text = "保有量：\(holdValue) SSC"
         
         
         applyButton.baseColor(backgroundColor: .systemTeal)
@@ -269,6 +280,7 @@ class ProductDetailViewController: UIViewController{
         applyButton.clipsToBounds = true
         applyButton.pressAction()
         applyButton.translatesAutoresizingMaskIntoConstraints = false
+        applyButton.addTarget(self, action: #selector(self.apply), for: .touchUpInside)
         
         
         NSLayoutConstraint.activate([
@@ -333,21 +345,31 @@ class ProductDetailViewController: UIViewController{
             applyButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
         ])
     }
+    
+    
+    @objc func apply(){
+        
+        let vc = applyCompViewController()
+        let nvc = UINavigationController(rootViewController: vc)
+        nvc.modalPresentationStyle = .fullScreen
+        present(nvc, animated: false)
+    }
 }
+
 
 
 extension ProductDetailViewController: UITextFieldDelegate{
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         
-        if let val = Float(textField.text ?? "0"){
+        if let val = Int(textField.text ?? "0"){
              
             quantity = val
-            totalLabel.text = "合計：\(quantity * unitPrice) TMI"
+            totalLabel.text = "合計：\(quantity * unitPrice) SSC"
         }
         else{
             quantity = 0
-            totalLabel.text = "合計：0 TMI"
+            totalLabel.text = "合計：0 SSC"
             return
         }
     }
@@ -355,20 +377,42 @@ extension ProductDetailViewController: UITextFieldDelegate{
 
 
 
-import web3swift
-import Web3Core
+import UIKit
+import Firebase
 
-//
-//class CreateAccountViewController: UIViewController {
-//
-//    private let _toTransferSegueIdentifier = "createAccountToTransferSegue"
-//
-//    func createAccountAction(_ sender: Any) {
-//
-//        let configA = EthAccountConfiguration(namespace: "walletA", password: "qwerty")
-//
-//        let (keystoreA, accountA): (GethKeyStore?,GethAccount?) = EthAccountCoordinator.default.launch(configA)
-//    }
-//
-//}
-//
+class ViewControlle2r: UIViewController {
+    
+    var imageView: UIImageView!
+    
+    let storage = Storage.storage()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let db = Firestore.firestore()
+
+        // Assuming your Firestore document has a field named "imageUrl"
+        db.collection("your_collection").document("your_document").getDocument { snapshot, error in
+            if let error = error {
+                print("Error getting document: \(error)")
+            } else if let data = snapshot?.data(), let imageUrl = data["imageUrl"] as? String {
+                self.loadAndDisplayImage(imageUrl)
+            }
+        }
+    }
+
+    func loadAndDisplayImage(_ imageUrl: String) {
+        
+        let storageRef = storage.reference(forURL: imageUrl)
+
+        // Download image data
+        storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
+            if let error = error {
+                print("Error downloading image data: \(error)")
+            } else if let data = data, let image = UIImage(data: data) {
+                // Display the image
+                self.imageView.image = image
+            }
+        }
+    }
+}

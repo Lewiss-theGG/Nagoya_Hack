@@ -26,6 +26,8 @@
 		E1739F712A8A00DF0095312A /* AttendDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1739F702A8A00DF0095312A /* AttendDetailViewController.swift */; };
 		E1739F732A8A2D0A0095312A /* ProductDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1739F722A8A2D0A0095312A /* ProductDisplayViewController.swift */; };
 		E1739F752A8A2DA30095312A /* displayProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1739F742A8A2DA30095312A /* displayProductCell.swift */; };
+		E1739FBE2A8DC4F00095312A /* ContractHelloWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1739FBD2A8DC4F00095312A /* ContractHelloWorld.swift */; };
+		E1B0D2152A8E598D00422B42 /* applyCompViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B0D2142A8E598D00422B42 /* applyCompViewController.swift */; };
 		E1C7D7E72A6D1D0100E901A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */; };
 		E1C7D7E92A6D1D0100E901A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7E82A6D1D0100E901A0 /* SceneDelegate.swift */; };
 		E1C7D7EB2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C7D7EA2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift */; };
@@ -79,6 +81,8 @@
 		E1739F702A8A00DF0095312A /* AttendDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendDetailViewController.swift; sourceTree = "<group>"; };
 		E1739F722A8A2D0A0095312A /* ProductDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDisplayViewController.swift; sourceTree = "<group>"; };
 		E1739F742A8A2DA30095312A /* displayProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = displayProductCell.swift; sourceTree = "<group>"; };
+		E1739FBD2A8DC4F00095312A /* ContractHelloWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractHelloWorld.swift; sourceTree = "<group>"; };
+		E1B0D2142A8E598D00422B42 /* applyCompViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = applyCompViewController.swift; sourceTree = "<group>"; };
 		E1C7D7E32A6D1D0100E901A0 /* GeekWhat2Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeekWhat2Do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1C7D7E62A6D1D0100E901A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1C7D7E82A6D1D0100E901A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -192,6 +196,14 @@
 			path = Record;
 			sourceTree = "<group>";
 		};
+		E1739FB82A8DBF460095312A /* web3 */ = {
+			isa = PBXGroup;
+			children = (
+				E1739FBD2A8DC4F00095312A /* ContractHelloWorld.swift */,
+			);
+			path = web3;
+			sourceTree = "<group>";
+		};
 		E1C7D7DA2A6D1D0100E901A0 = {
 			isa = PBXGroup;
 			children = (
@@ -231,8 +243,10 @@
 				E1739F6C2A89B0EE0095312A /* attendCell.swift */,
 				E1739F722A8A2D0A0095312A /* ProductDisplayViewController.swift */,
 				E1739F742A8A2DA30095312A /* displayProductCell.swift */,
+				E1B0D2142A8E598D00422B42 /* applyCompViewController.swift */,
 				E12FA9D92A74EB3B00F8CD43 /* chatDecode.swift */,
 				E1C7D7EA2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift */,
+				E1739FB82A8DBF460095312A /* web3 */,
 				E1C7D7EF2A6D1D0500E901A0 /* Assets.xcassets */,
 				E12FA9E62A765DDA00F8CD43 /* Fonts */,
 				E1C7D7F12A6D1D0500E901A0 /* LaunchScreen.storyboard */,
@@ -503,10 +517,12 @@
 				E1C7D7EB2A6D1D0100E901A0 /* ViewWithAnimationViewController.swift in Sources */,
 				E1739F712A8A00DF0095312A /* AttendDetailViewController.swift in Sources */,
 				E1C7D8172A6D444900E901A0 /* Rules.swift in Sources */,
+				E1B0D2152A8E598D00422B42 /* applyCompViewController.swift in Sources */,
 				E12FA9EB2A78932900F8CD43 /* RecordViewController.swift in Sources */,
 				E12FA9E92A76602600F8CD43 /* SendRequestViewController.swift in Sources */,
 				E1739F682A88FCFE0095312A /* UserViewController.swift in Sources */,
 				E12FA9F92A7C96C900F8CD43 /* Firebase_Struct.swift in Sources */,
+				E1739FBE2A8DC4F00095312A /* ContractHelloWorld.swift in Sources */,
 				E1593E682A70D62500B2B915 /* ChatViewController.swift in Sources */,
 				E12FA9ED2A7899A000F8CD43 /* RecordTV_Cell.swift in Sources */,
 				E1739F752A8A2DA30095312A /* displayProductCell.swift in Sources */,

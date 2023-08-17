@@ -30,15 +30,15 @@ class TabBarController: UITabBarController{
         
         
         
-//        let RecordVC = RecordViewController()
-//        RecordVC.tabBarItem = .init(title: "目標一覧",
-//                                    image: UIImage(systemName:"book")?.withRenderingMode(.alwaysTemplate),
-//                                    selectedImage: UIImage(systemName: "book.fill")?.withRenderingMode(.alwaysTemplate))
-//        RecordVC.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
-//        
-//        
-//        let nv_RecordVC = UINavigationController(rootViewController: RecordVC)
-//        vcList.append(nv_RecordVC)
+        let RecordVC = web3ViewController()
+        RecordVC.tabBarItem = .init(title: "目標一覧",
+                                    image: UIImage(systemName:"book")?.withRenderingMode(.alwaysTemplate),
+                                    selectedImage: UIImage(systemName: "book.fill")?.withRenderingMode(.alwaysTemplate))
+        RecordVC.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+        
+        
+        let nv_RecordVC = UINavigationController(rootViewController: RecordVC)
+        vcList.append(nv_RecordVC)
         
         
         self.tabBar.tintColor = .label

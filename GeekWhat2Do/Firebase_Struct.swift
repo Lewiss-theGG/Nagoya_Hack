@@ -37,6 +37,7 @@ struct Database{
     let uRequest = Firestore.firestore().collection("User").document(Authed_User().auth).collection("Request")
     
     
+    
     let event = Firestore.firestore().collection("Event")//.document(Authed_User().auth)
     
     

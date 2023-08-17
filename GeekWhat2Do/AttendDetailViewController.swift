@@ -9,7 +9,17 @@ import UIKit
 
 class AttendDetailViewController: UIViewController {
     
-    let txt = "年2回、東区東浄学区一円の清掃を行っています。今回の清掃では、同学区内の沿道にて散乱ゴミ及び落葉の収集・清掃を行い、特に中学生及び小学生に多くご参加いただきました。青少年が清掃活動に参加することにより「奉仕の心」「社会参加」の意識を醸成するよう取り組みました。"
+    var _eventID = String()
+    
+    
+    var eventData: Event = Event(eventAt: String(),
+                                 eventAttendance: Int(),
+                                 eventCount: Int(),
+                                 eventDetail: String(),
+                                 eventDistributed: Int(),
+                                 eventDate: Date(),
+                                 eventID: String(),
+                                 eventName: String())  //eventID
 
     
     let baseView = GradationView()
@@ -41,7 +51,44 @@ class AttendDetailViewController: UIViewController {
         
         self.setLeft(leftBarTitle: "<")
         self.setView()
+        
+        
+        let globalQ = DispatchQueue.global()
+        globalQ.sync {
+            
+            self.getEventData()
+        }
     }
+    
+    
+    final func getEventData(){
+        
+        Database().event.document(_eventID).getDocument { document, error in
+            
+            if let error = error{
+                
+                print(error.localizedDescription)
+                return
+            }
+            
+            if let document = document, document.exists {
+                
+                do {
+                    
+                    try self.eventData =  document.data(as: Event.self)
+                    
+                    self.setView()
+                    self.descriptionTable.reloadData()
+                    
+                } catch {
+                    print("Error decoding document: \(error)")
+                }
+                
+            }
+        }
+    }
+    
+    
     
     
     func setView(){
@@ -70,7 +117,7 @@ class AttendDetailViewController: UIViewController {
         titleLabel.baseColor(backgroundColor: .label, opacity: 0.05)
         titleLabel.textAlignment = .left
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = titleValue
+        titleLabel.text = "\(eventData.eventName)"
         
         
         //rewardLabel.text = "参加実績"
@@ -79,7 +126,7 @@ class AttendDetailViewController: UIViewController {
         rewardLabel.baseColor(backgroundColor: .clear)
         rewardLabel.textAlignment = .left
         rewardLabel.translatesAutoresizingMaskIntoConstraints = false
-        rewardLabel.text = rewardValue
+        rewardLabel.text = "\(rewardValue) SSC獲得"
         
         
         atLabel.baseFont(font: .monospacedSystemFont(ofSize: 18, weight: .semibold))
@@ -89,7 +136,7 @@ class AttendDetailViewController: UIViewController {
         atLabel.layer.cornerRadius = 10
         atLabel.textAlignment = .center
         atLabel.translatesAutoresizingMaskIntoConstraints = false
-        atLabel.text = atValue
+        atLabel.text = "\(eventData.eventAt)"
         
         
         dateLabel.baseFont(font: .monospacedSystemFont(ofSize: 12, weight: .thin))
@@ -99,7 +146,7 @@ class AttendDetailViewController: UIViewController {
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         let formatter = DateFormatter()
         formatter.dateFormat = "yy年MM月dd日"
-        dateLabel.text = "\(formatter.string(from: Date()))"
+        dateLabel.text = "\(formatter.string(from: eventData.eventDate))"
         
         
         descriptionTable.delegate = self
@@ -184,8 +231,8 @@ extension AttendDetailViewController: UITableViewDataSource, UITableViewDelegate
                                  valueFont: .monospacedSystemFont(ofSize: 20, weight: .semibold),
                                  valueTextColor: .link)
                 
-                cell.titleLabel.text = "一人当たりの配布トークン量"
-                cell.valueLabel.text = "15 TMI"
+                cell.titleLabel.text = "トークンの配布量"
+                cell.valueLabel.text = "\(eventData.eventDistributed) SSC"
                 
             case 3:
                 cell.cellSetView(titleFont: .monospacedSystemFont(ofSize: 20, weight: .semibold),
@@ -194,7 +241,7 @@ extension AttendDetailViewController: UITableViewDataSource, UITableViewDelegate
                                  valueTextColor: .link)
                 
                 cell.titleLabel.text = "イベント参加人数"
-                cell.valueLabel.text = "982 人"
+                cell.valueLabel.text = "\(eventData.eventAttendance) 人"
                 
                 
             case 4:
@@ -204,7 +251,7 @@ extension AttendDetailViewController: UITableViewDataSource, UITableViewDelegate
                                  valueTextColor: .link)
                 
                 cell.titleLabel.text = "イベント実施回数"
-                cell.valueLabel.text = "3 回"
+                cell.valueLabel.text = "\(eventData.eventCount) 回"
                 
             default:
                 break
@@ -218,7 +265,7 @@ extension AttendDetailViewController: UITableViewDataSource, UITableViewDelegate
             let cell = tableView.dequeueReusableCell(withIdentifier: "TargetTextCell", for: indexPath) as! TargetTextCell
             
             cell.cellSetView()
-            cell.textView.text = txt
+            cell.textView.text = "\(eventData.eventDetail)"
             
             return cell
         }
